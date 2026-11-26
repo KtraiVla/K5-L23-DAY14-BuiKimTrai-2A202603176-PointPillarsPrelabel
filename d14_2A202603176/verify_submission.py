@@ -113,6 +113,19 @@ def main():
     refs = sum(len(boxes) for name in ('ref_A', 'ref_B') for boxes in docs[name]['frames'].values())
     require(len(qa_rows) == qa['total_boxes'] == refs, 'QA reference counts differ.')
     require(sum(bool(row['flags']) for row in qa_rows) == qa['boxes_with_warnings'], 'QA warning count differs.')
+    snapshot_path = run / 'live_cvat_review_snapshot.json'
+    if snapshot_path.exists():
+        snapshot = load(snapshot_path)
+        for part in frames:
+            current_hash = hashlib.sha256((run / f'ref_{part}.json').read_bytes()).hexdigest()
+            require(snapshot['references_sha256'][part] == current_hash, 'Live-review snapshot is stale; rebuild before using its object IDs.')
+        with (run / 'review_checklist.csv').open(encoding='utf-8-sig', newline='') as handle:
+            checklist = list(csv.DictReader(handle))
+        require(len(checklist) == refs, 'Review checklist count differs.')
+        for row in checklist:
+            box = docs[f"ref_{row['part']}"]['frames'][row['frame']][int(row['reference_idx']) - 1]
+            require(row['label'] == box['label'] and all(abs(float(row[key]) - box[key]) < 1e-8
+                    for key in ('x', 'y', 'z', 'length', 'width', 'height', 'yaw')), 'Review checklist differs from reference.')
     for name in frames['A']:
         with Image.open(run / 'compare' / f'{name}.jpg') as picture:
             picture.verify()
@@ -127,7 +140,7 @@ def main():
     print(json.dumps({'technical_checks': 'PASS', 'student': student, 'seed_tag': tag,
                       'metrics': {name: value['total'] for name, value in results.items()},
                       'frame_list_sha256': {part: hashlib.sha256((run / f'frames_{part}.txt').read_bytes()).hexdigest() for part in frames},
-                      'not_validated': ['historical 5b prediction and personal reflection', 'human quality of every annotation', 'LMS submission'],
+                      'not_validated': ['historical 5b prediction', 'human quality of every annotation', 'LMS submission'],
                       'quality_review': f"PENDING: {qa['boxes_with_warnings']}/{qa['total_boxes']} boxes have heuristic warnings; see VISUAL_REVIEW.md."},
                      ensure_ascii=False, indent=2))
 

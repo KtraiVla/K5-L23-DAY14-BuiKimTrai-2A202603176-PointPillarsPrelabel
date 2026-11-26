@@ -2,6 +2,8 @@
 
 Trạng thái: **CHƯA XÁC NHẬN CHẤT LƯỢNG NHÃN ĐẠT**. Đây là ghi chú AI sau khi xem 15 ảnh tổng hợp gồm 7 camera và BEV, kết hợp heuristic `scripts/vf_qa.py`. Không phải nhãn chuẩn và không thay thế người gán nhãn. Không tự động xóa, thêm, đổi lớp hay dời hộp trong `ref_A.json`/`ref_B.json`.
 
+Vòng tiếp theo đã có [object ID, tọa độ và đề xuất xử lý cụ thể](REVIEW_ACTIONS.md), [checklist 283 hộp](review_checklist.csv) và [62 hộp có cảnh báo](review_warnings_62.csv). Task #33 đã đổi tên thành `D14-2A202603176-B`.
+
 ## Các vị trí ưu tiên
 
 Các frame CVAT dưới đây đếm từ **0**, theo thứ tự frame trong task lúc xuất backup. Mở đúng frame theo tên trước khi sửa. Dùng camera để nhận diện vật thể; dùng LiDAR và ba mặt cắt để xác định tâm, kích thước, đáy và khoảng cách 50 m. Phép chiếu một hộp rất gần cảm biến có thể trải rộng trên ảnh; không xóa chỉ vì hình chiếu lớn.
@@ -33,7 +35,7 @@ Có 62 hộp mang ít nhất một cảnh báo: 30 có thể quá chật, 15 có
 ## Sau khi sửa trên CVAT
 
 1. Mở task [A #32](http://localhost:8080/tasks/32) và [B #33](http://localhost:8080/tasks/33), sửa theo `docs/GUIDELINE.md`, dùng **Shape**, rồi bấm **Save**.
-2. Xuất lại đúng task A/B. Task B đang tên `D14-2A202603176-B-preview`; cần đổi tên thành `D14-2A202603176-B` trước khi dùng lệnh `vf_cvat.py reference --task B`, hoặc tiếp tục dùng phương án backup và chuyển đổi như lần xuất này. Không dùng `prelabel --replace`: thao tác đó xóa nhãn đã sửa.
+2. Xuất lại đúng task A/B. Task #33 đã được đổi tên từ `D14-2A202603176-B-preview` thành `D14-2A202603176-B` để dùng lệnh `vf_cvat.py reference --task B`. Metadata trong file tham chiếu cũ giữ tên nguồn lúc xuất. Có thể tiếp tục dùng phương án backup và chuyển đổi như lần xuất trước. Không dùng `prelabel --replace`: thao tác đó xóa nhãn đã sửa.
 3. Nếu A thay đổi, chạy lại sweep A, chọn cấu hình và tạo lại dự đoán B. Giữ bản tham chiếu cũ để đối chiếu; không ghi đè nhãn đã sửa trên CVAT bằng pre-label.
 4. Tính lại compare A, chi phí B, QA và cập nhật bảng báo cáo. Chi phí 6.3/2.9 hiện tại chỉ đúng với các file đang được lưu.
 5. Chạy `verify_submission.py` với Data-VF và SEED chính thức, commit/push bản cập nhật, sau đó dùng SHA mới khi nộp LMS. Ghi chú vòng kiểm nhãn chỉ được đánh dấu hoàn tất sau khi người học thực sự đã kiểm.

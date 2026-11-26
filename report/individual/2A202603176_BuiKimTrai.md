@@ -12,6 +12,8 @@
 
 Không bổ sung một dự đoán rồi trình bày như đã viết trước sweep, không đổi thời gian và không viết lại lịch sử Git. Tiêu chí 5b chưa hoàn thành; việc chấp nhận thiếu sót này thuộc quyết định của coach.
 
+Đã chuẩn bị [bản nháp giải thích gửi coach](../../d14_2A202603176/COACH_NOTE_DRAFT.md), nhưng chưa gửi và chưa có quyết định của coach.
+
 ## 2. Tập A: sửa tay và tune
 
 `pred_A.json` giữ nguyên dự đoán gốc: 82 hộp. `ref_A.json` có 41 hộp trên đủ 3 frame: 29 Car, 2 Pedestrian, 7 Cyclist và 3 Bus. Nguồn nhãn là task CVAT #32, `D14-2A202603176-A`, sau khi người học lưu sửa nhãn. Task này được tạo từ bản đã lọc `score_thr=0.4`, `min_points=5` gồm 49 hộp; bản đó được giữ riêng trong `pred_A_filtered.json`. Bảng dưới là phép đo lại so với tham chiếu, không phải nhật ký từng thao tác trên CVAT.
@@ -55,11 +57,19 @@ Có đủ ảnh so sánh của cả ba frame trong [compare](../../d14_2A2026031
 
 Số hộp phải xóa giảm 44 xuống 11; số hộp phải thêm vẫn là 3 và số hộp sửa theo ngưỡng của script là 0. Mức giảm 9.9 điểm bằng `33 × 0.3`, đến từ giảm hộp thừa. Đây là giảm chi phí theo công thức, chưa phải mức tiết kiệm thời gian thực tế.
 
-**Đối chiếu dự đoán 5b:** không có nội dung dự đoán trước sweep để kết luận đúng hay sai. Số liệu trên là kết quả sau thực nghiệm. Phần kết luận cá nhân được chấm theo `RULES.md` chưa có nội dung do người học tự viết; báo cáo này không tạo lại phần đó bằng AI.
+**Nhận xét cá nhân do người học cung cấp sau khi xem tập A** (AI chỉ sửa câu chữ):
+
+> Ở tập A, tôi thấy mô hình bỏ sót một vài vật thể, chẳng hạn như xe bus.
+
+Nhận xét này phù hợp với số đo hiện tại: cả cấu hình gốc và cấu hình cuối còn 3 hộp cần thêm trên A; ba hộp bổ sung trong tham chiếu là Bus. Việc tăng threshold đã giảm hộp thừa theo bảng số đo, nhưng không bổ sung được ba vật thể này. Phần giải thích số liệu ở đây do công cụ tổng hợp; không trình bày như nhận xét về threshold do người học đã tự cung cấp.
+
+**Đối chiếu dự đoán 5b:** không có nội dung dự đoán trước sweep để kết luận đúng hay sai. Nhận xét trên được cung cấp sau khi đã có kết quả, không phải bằng chứng 5b và không được ghi lùi thời điểm.
 
 ## 4. Tập B
 
 `pred_B.json` có 243 hộp, metadata cấu hình khớp `best_config.json`. `ref_B.json` có 242 hộp trên đủ 12 frame: 190 Car, 3 Pedestrian, 47 Cyclist và 2 Truck. Nguồn là task CVAT #33, `D14-2A202603176-B-preview`, sau khi lưu nhãn. File được lấy từ bản sao lưu task rồi chuyển cuboid bằng hàm `scripts.vf_common.cuboid_from_cvat` của lab; không lấy nhãn Labels-VF của coach.
+
+Trong vòng rà soát tiếp theo, task #33 đã được đổi tên thành `D14-2A202603176-B` để khớp lệnh xuất của lab. Việc đổi tên không sửa hình học/lớp của nhãn. Tên `B-preview` ở metadata file tham chiếu ghi nhận đúng tên task tại lần xuất cũ.
 
 Lưu ý trình tự: task B-preview đã được tạo trước khi hoàn tất sweep, dùng preset `score_thr=0.4`, `min_points=5`. Cấu hình cuối trùng preset này. Không trình bày đây là quy trình giữ kín B hoàn toàn đến sau khi chọn cấu hình.
 
@@ -95,7 +105,7 @@ Hai hộp tham chiếu Truck ở `s01f02` và `s01f27` không được ghép v�
 3. Chi phí sửa là chỉ số dựa trên ghép hộp và ngưỡng sai lệch. `edit=0` không có nghĩa mọi hộp đã sát điểm, sát mặt đường và đúng hướng đầu xe. Chỉ số không phải thời gian lao động và không kiểm tra mọi vật thể bị bỏ sót trong tham chiếu.
 4. Nhãn tham chiếu do người học sửa từ pre-label; có nguy cơ giữ lại lỗi của mô hình. B đã được xem trước khi chốt toàn bộ phân tích, nên kết quả B hiện tại không phải đánh giá độc lập.
 5. Heuristic của `scripts/vf_qa.py` gắn cảnh báo cho 62/283 hộp tham chiếu: 30 cảnh báo có thể quá chật, 15 có thể chìm và 26 có thể lơ lửng; một hộp có thể mang nhiều cảnh báo. Đây là gợi ý kiểm tra, không phải 62 lỗi đã được xác nhận. Những vị trí này cần người học mở CVAT kiểm lại.
-6. Thiếu dự đoán 5b có nội dung trước sweep và thiếu phần đối chiếu cá nhân. Không khẳng định bài đã đạt đủ mọi yêu cầu hoặc đủ điểm rubric.
+6. Thiếu dự đoán 5b có nội dung trước sweep nên chưa thể đối chiếu dự đoán đúng/sai. Đã có nhận xét cá nhân sau thực nghiệm, nhưng nhận xét đó không thay thế yêu cầu về thời điểm 5b. Không khẳng định bài đã đạt đủ mọi yêu cầu hoặc đủ điểm rubric.
 
 ### Nguồn và hỗ trợ công cụ
 
