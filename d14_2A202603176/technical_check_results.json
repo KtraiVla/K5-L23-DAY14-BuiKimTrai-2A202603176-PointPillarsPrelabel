@@ -1,0 +1,44 @@
+{
+  "technical_checks": "PASS",
+  "student": "2A202603176",
+  "seed_tag": "393590736f",
+  "metrics": {
+    "A_default": {
+      "gt": 41,
+      "pred": 82,
+      "match": 38,
+      "delete": 44,
+      "add": 3,
+      "edit": 0,
+      "cost": 16.2
+    },
+    "A_tuned": {
+      "gt": 41,
+      "pred": 49,
+      "match": 38,
+      "delete": 11,
+      "add": 3,
+      "edit": 0,
+      "cost": 6.3
+    },
+    "B_tuned": {
+      "gt": 242,
+      "pred": 243,
+      "match": 240,
+      "delete": 3,
+      "add": 2,
+      "edit": 0,
+      "cost": 2.9
+    }
+  },
+  "frame_list_sha256": {
+    "A": "02d2cebe53b00dce7d5711dca17a0d02fbac8baf6cbc42745c852183c3a80755",
+    "B": "25a161a18f44a87b88828d659e1453f3a360ed346dcb8d3b5c0e326ce7518517"
+  },
+  "not_validated": [
+    "historical 5b prediction and personal reflection",
+    "human quality of every annotation",
+    "LMS submission"
+  ],
+  "quality_review": "PENDING: 62/283 boxes have heuristic warnings; see VISUAL_REVIEW.md."
+}

@@ -1,0 +1,11 @@
+{
+  "test_runner": "python -B -m unittest discover -s tests -p PATTERN",
+  "tests": [
+    {"pattern": "test_cvat_cuboid.py", "count": 12, "status": "PASS"},
+    {"pattern": "test_scoring_range.py", "count": 10, "status": "PASS"},
+    {"pattern": "test_json_bom.py", "count": 1, "status": "PASS"}
+  ],
+  "total_tests": 23,
+  "annotation_quality_verified": false,
+  "scope": "Existing cuboid conversion, scoring-range and JSON BOM regression tests; not an annotation quality grade."
+}

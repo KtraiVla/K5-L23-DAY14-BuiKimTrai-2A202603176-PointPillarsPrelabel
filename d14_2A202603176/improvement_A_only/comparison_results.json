@@ -1,0 +1,253 @@
+{
+  "candidates_evaluated_on_A": 564,
+  "previous": {
+    "A": {
+      "gt": 41,
+      "pred": 49,
+      "match": 38,
+      "delete": 11,
+      "add": 3,
+      "edit": 0,
+      "cost": 6.3
+    },
+    "B": {
+      "gt": 242,
+      "pred": 244,
+      "match": 240,
+      "delete": 4,
+      "add": 2,
+      "edit": 0,
+      "cost": 3.2
+    }
+  },
+  "A_only_candidate": {
+    "config": {
+      "voxel_size": 0.16,
+      "intensity_mode": "clip",
+      "intensity_scale": 1.0,
+      "ground_mode": "fixed",
+      "delta_z": 0.0,
+      "passes": 4,
+      "score_thr": 0.4,
+      "thr_car": 0.44,
+      "thr_cyc": null,
+      "thr_ped": null,
+      "nms_thr": 0.01,
+      "nms_pre": 100,
+      "max_num": 50,
+      "range_m": 50.0,
+      "min_points": 0,
+      "merge_nms_thr": 0.1,
+      "size_pad_m": 0.1,
+      "truck_l_min": 5.6,
+      "truck_h_min": 2.4,
+      "bus_l_min": 9.0,
+      "bus_h_min": 2.8,
+      "extra": {}
+    },
+    "A": {
+      "total": {
+        "delete": 9,
+        "add": 3,
+        "edit": 0,
+        "cost": 5.7
+      },
+      "per_frame": {
+        "s01f18": {
+          "gt": 13,
+          "pred": 16,
+          "match": 12,
+          "delete": 4,
+          "add": 1,
+          "edit": 0,
+          "cost": 2.2
+        },
+        "s03f31": {
+          "gt": 12,
+          "pred": 15,
+          "match": 11,
+          "delete": 4,
+          "add": 1,
+          "edit": 0,
+          "cost": 2.2
+        },
+        "s04f28": {
+          "gt": 16,
+          "pred": 16,
+          "match": 15,
+          "delete": 1,
+          "add": 1,
+          "edit": 0,
+          "cost": 1.3
+        }
+      }
+    },
+    "B": {
+      "total": {
+        "delete": 3,
+        "add": 19,
+        "edit": 0,
+        "cost": 19.9
+      },
+      "per_frame": {
+        "s01f02": {
+          "gt": 23,
+          "pred": 23,
+          "match": 22,
+          "delete": 1,
+          "add": 1,
+          "edit": 0,
+          "cost": 1.3
+        },
+        "s01f27": {
+          "gt": 20,
+          "pred": 20,
+          "match": 19,
+          "delete": 1,
+          "add": 1,
+          "edit": 0,
+          "cost": 1.3
+        },
+        "s01f48": {
+          "gt": 27,
+          "pred": 24,
+          "match": 24,
+          "delete": 0,
+          "add": 3,
+          "edit": 0,
+          "cost": 3.0
+        },
+        "s02f11": {
+          "gt": 20,
+          "pred": 18,
+          "match": 18,
+          "delete": 0,
+          "add": 2,
+          "edit": 0,
+          "cost": 2.0
+        },
+        "s02f29": {
+          "gt": 15,
+          "pred": 16,
+          "match": 15,
+          "delete": 1,
+          "add": 0,
+          "edit": 0,
+          "cost": 0.3
+        },
+        "s02f54": {
+          "gt": 21,
+          "pred": 20,
+          "match": 20,
+          "delete": 0,
+          "add": 1,
+          "edit": 0,
+          "cost": 1.0
+        },
+        "s03f08": {
+          "gt": 20,
+          "pred": 20,
+          "match": 20,
+          "delete": 0,
+          "add": 0,
+          "edit": 0,
+          "cost": 0.0
+        },
+        "s03f24": {
+          "gt": 12,
+          "pred": 10,
+          "match": 10,
+          "delete": 0,
+          "add": 2,
+          "edit": 0,
+          "cost": 2.0
+        },
+        "s03f57": {
+          "gt": 19,
+          "pred": 16,
+          "match": 16,
+          "delete": 0,
+          "add": 3,
+          "edit": 0,
+          "cost": 3.0
+        },
+        "s05f01": {
+          "gt": 28,
+          "pred": 25,
+          "match": 25,
+          "delete": 0,
+          "add": 3,
+          "edit": 0,
+          "cost": 3.0
+        },
+        "s05f24": {
+          "gt": 23,
+          "pred": 21,
+          "match": 21,
+          "delete": 0,
+          "add": 2,
+          "edit": 0,
+          "cost": 2.0
+        },
+        "s05f45": {
+          "gt": 14,
+          "pred": 13,
+          "match": 13,
+          "delete": 0,
+          "add": 1,
+          "edit": 0,
+          "cost": 1.0
+        }
+      }
+    },
+    "adopted": false
+  },
+  "recommended_existing_preset": {
+    "config": {
+      "voxel_size": 0.16,
+      "intensity_mode": "clip",
+      "intensity_scale": 1.0,
+      "ground_mode": "fixed",
+      "delta_z": 0.0,
+      "passes": 4,
+      "score_thr": 0.4,
+      "thr_car": null,
+      "thr_cyc": null,
+      "thr_ped": null,
+      "nms_thr": 0.01,
+      "nms_pre": 100,
+      "max_num": 50,
+      "range_m": 50.0,
+      "min_points": 5,
+      "merge_nms_thr": 0.1,
+      "size_pad_m": 0.1,
+      "truck_l_min": 5.6,
+      "truck_h_min": 2.4,
+      "bus_l_min": 9.0,
+      "bus_h_min": 2.8,
+      "extra": {}
+    },
+    "A": {
+      "gt": 41,
+      "pred": 49,
+      "match": 38,
+      "delete": 11,
+      "add": 3,
+      "edit": 0,
+      "cost": 6.3
+    },
+    "B": {
+      "gt": 242,
+      "pred": 243,
+      "match": 240,
+      "delete": 3,
+      "add": 2,
+      "edit": 0,
+      "cost": 2.9
+    }
+  },
+  "B_cost_reduction_percent": 9.38,
+  "reference_files_unchanged": true,
+  "interpretation_limit": "Comparison against the student-provided references. B references were already available; this is exploratory evidence, not a newly unseen independent test.",
+  "manual_review_note": "10/12 B frames have identical box geometry/classes to the initial preview; this alone does not prove they were not reviewed, and automatic cost is not an independent label-quality grade."
+}

@@ -1,0 +1,46 @@
+{
+  "A": {
+    "source_task": "D14-2A202603176-A",
+    "frame_count": 3,
+    "boxes_by_frame": {
+      "s01f18": 13,
+      "s03f31": 12,
+      "s04f28": 16
+    },
+    "total_boxes": 41,
+    "tracks": 0,
+    "class_counts": {
+      "Car": 29,
+      "Pedestrian": 2,
+      "Cyclist": 7,
+      "Bus": 3
+    },
+    "matches_existing_reference": true
+  },
+  "B": {
+    "source_task": "D14-2A202603176-B-preview",
+    "frame_count": 12,
+    "boxes_by_frame": {
+      "s01f02": 23,
+      "s01f27": 20,
+      "s01f48": 27,
+      "s02f11": 20,
+      "s02f29": 15,
+      "s02f54": 21,
+      "s03f08": 20,
+      "s03f24": 12,
+      "s03f57": 19,
+      "s05f01": 28,
+      "s05f24": 23,
+      "s05f45": 14
+    },
+    "total_boxes": 242,
+    "tracks": 0,
+    "class_counts": {
+      "Car": 190,
+      "Pedestrian": 3,
+      "Truck": 2,
+      "Cyclist": 47
+    }
+  }
+}

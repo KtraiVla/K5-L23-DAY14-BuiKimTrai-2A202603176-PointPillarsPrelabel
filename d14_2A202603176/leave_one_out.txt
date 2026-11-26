@@ -1,0 +1,4 @@
+Leave-one-out reconstructed from sweep.csv:
+s01f18: selected {'score_thr': 0.4, 'min_points': 0} -> 2.5 (best possible 2.5)
+s03f31: selected {'score_thr': 0.4, 'min_points': 0} -> 2.2 (best possible 2.2)
+s04f28: selected {'score_thr': 0.4, 'min_points': 0} -> 1.6 (best possible 1.6)
