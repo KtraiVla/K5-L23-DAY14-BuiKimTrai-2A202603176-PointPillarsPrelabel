@@ -137,6 +137,22 @@ def main():
         if not target.startswith(('http:', 'https:')):
             require((report.parent / target).resolve().exists(), f'Broken report link: {target}')
     require(bool(re.search(r'!\[[^\]]*\]\([^)]*compare/[^)]*\.jpg\)', content)), 'No comparison image in report.')
+    proposal_path = run / 'qa_proposed/B_proposal.json'
+    if proposal_path.exists():
+        proposal = load(proposal_path)
+        observed = load(run / 'qa_proposed/cvat_validation.json')
+        journal = load(run / 'qa_proposed/B_changes.json')
+        require(proposal['meta']['source_reference_sha256'] == hashlib.sha256((run / 'ref_B.json').read_bytes()).hexdigest(), 'QA proposal source is stale.')
+        require(proposal['meta']['not_for_submission_as_reference'] is True and observed['human_validated'] is False, 'QA proposal status is inconsistent.')
+        require(set(proposal['frames']) == set(frames['B']), 'QA proposal frame set differs.')
+        for name, boxes in proposal['frames'].items():
+            require(len(boxes) == observed['frame_counts_observed_in_UI'][name], 'QA proposal/UI box counts differ.')
+            require(dict(collections.Counter(box['label'] for box in boxes)) == observed['class_counts_observed_in_UI'][name], 'QA proposal/UI classes differ.')
+            for box in boxes:
+                require(box['label'] in vf.CLASS_IDS and all(math.isfinite(float(box[key])) for key in ('x', 'y', 'z', 'length', 'width', 'height', 'yaw'))
+                        and min(box[key] for key in ('length', 'width', 'height')) > 0, 'Invalid QA proposal box.')
+        require(sum(map(len, proposal['frames'].values())) == journal['proposed_boxes'] == observed['total_boxes'], 'QA proposal totals differ.')
+        require(journal['original_boxes'] - journal['proposed_boxes'] == sum(action['action'] == 'propose_delete' for action in journal['actions']), 'QA proposal deletion journal differs.')
     print(json.dumps({'technical_checks': 'PASS', 'student': student, 'seed_tag': tag,
                       'metrics': {name: value['total'] for name, value in results.items()},
                       'frame_list_sha256': {part: hashlib.sha256((run / f'frames_{part}.txt').read_bytes()).hexdigest() for part in frames},

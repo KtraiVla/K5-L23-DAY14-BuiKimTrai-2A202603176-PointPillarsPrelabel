@@ -63,6 +63,8 @@ Lệnh thứ nhất chỉ đọc file, trả `technical_checks: PASS` khi cấu 
 
 Vòng hỗ trợ tiếp theo đã chuẩn bị `REVIEW_ACTIONS.md`, checklist đủ 283 hộp, bảng riêng 62 cảnh báo và ảnh camera/BEV/ba mặt cắt cục bộ theo object ID. Đây là hỗ trợ kiểm, chưa phải xác nhận người học đã kiểm nhãn.
 
+Sau khi người học yêu cầu AI kiểm tiếp, đã tạo task đề xuất riêng #34: bỏ 6 hộp tại cây/bồn hoa và chỉnh một Truck, đủ 236 hộp/12 frame; đã mở từng frame xác nhận số lượng/lớp và Details của Truck. Chiều dài xe tải còn là ước lượng do bị che. Tham chiếu A/B gốc giữ nguyên; không đánh dấu bản đề xuất là nhãn đã được người kiểm. Xem `qa_proposed/README.md`.
+
 1. Mở task A #32 và B #33, rà các vị trí ưu tiên trong `VISUAL_REVIEW.md` và các hộp có cảnh báo trong `pointcloud_qa.csv`. Sửa đúng điểm, lớp, kích thước và mặt đất, rồi Save.
 2. Xuất nhãn mới, tính lại toàn bộ số đo liên quan và cập nhật báo cáo/commit sau khi nhãn thay đổi. Không ghi đè nhãn đã sửa bằng pre-label.
 3. Kiểm tra nhận xét cá nhân đã được sửa câu chữ đúng ý mình. Dùng `COACH_NOTE_DRAFT.md` để trình bày trung thực việc thiếu 5b với coach; không thể khắc phục thời điểm dự đoán chỉ bằng thêm câu sau sweep.

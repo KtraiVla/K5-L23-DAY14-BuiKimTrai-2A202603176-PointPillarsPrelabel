@@ -98,6 +98,8 @@ Hai hộp tham chiếu Truck ở `s01f02` và `s01f27` không được ghép v�
 
 10/12 frame B giữ nguyên hình học và lớp so với preview ban đầu. Việc này không tự chứng minh chưa được xem, nhưng chi phí gần 0 cũng không chứng minh nhãn đúng. Kiểm tra lại bằng LiDAR và ảnh camera đã phát hiện các vị trí cần người học rà soát, đặc biệt các hộp tại cây/bồn hoa và xe lớn. Danh sách nằm trong [VISUAL_REVIEW.md](../../d14_2A202603176/VISUAL_REVIEW.md). Chất lượng nhãn B còn chờ xác nhận sau vòng sửa này.
 
+Theo yêu cầu hỗ trợ kiểm tiếp, đã tạo **bản đề xuất AI riêng** trên task CVAT #34 `D14-2A202603176-B-AI-QA-review`: bỏ 6 hộp tại vùng cây/bồn hoa của `s02f54` và đề xuất đổi/chỉnh một Truck ở `s05f01`, còn 236 hộp trên 12 frame. Chiều dài Truck 6.8 m là ước lượng do phần đuôi bị che, đã ghi rõ trong note; chưa được người học kiểm. Chi tiết ở [qa_proposed/README.md](../../d14_2A202603176/qa_proposed/README.md). Bản này chưa thay `ref_B.json`; bảng chi phí 2.9 vẫn thuộc bản tham chiếu cũ. Không dùng nhãn AI chưa được kiểm để khẳng định đã sửa xong tập B.
+
 ## 5. Giới hạn
 
 1. Tập A chỉ có 3 frame. Đồng hạng trên A và leave-one-out trong một grid nhỏ không bảo đảm cấu hình tốt trên cảnh khác; thử nghiệm mở rộng đã cho thấy rủi ro này.
@@ -110,5 +112,7 @@ Hai hộp tham chiếu Truck ở `s01f02` và `s01f27` không được ghép v�
 ### Nguồn và hỗ trợ công cụ
 
 AI hỗ trợ chuẩn bị môi trường, chạy lệnh, xuất/đổi định dạng sao lưu CVAT, thử cấu hình, tổng hợp số đo, rà soát file và diễn đạt phần kết quả kỹ thuật. AI dùng thêm heuristic QA sẵn có của lab và xem ảnh chiếu nhãn để lập danh sách cần kiểm tra; không sửa nhãn tham chiếu bằng công cụ tự động, không tạo dự đoán 5b hoặc kết luận cá nhân thay người học. Không sửa code mô hình, ngưỡng chấm hoặc dùng nhãn của người khác.
+
+Ngoài pre-label của lab, AI đã dùng phép chiếu camera và mặt cắt LiDAR để chuẩn bị bản nhãn đề xuất riêng trên task #34 như mô tả ở mục 4. Các thay đổi này được khai báo là AI hỗ trợ, chưa phải nhãn người học đã xác nhận.
 
 Kết quả tự kiểm được lưu tại [FINAL_REVIEW.md](../../d14_2A202603176/FINAL_REVIEW.md) và [validation_summary.json](../../d14_2A202603176/validation_summary.json). Kiểm tra cấu trúc đạt không thay thế việc coach chấm chất lượng nhãn và lịch sử 5b.

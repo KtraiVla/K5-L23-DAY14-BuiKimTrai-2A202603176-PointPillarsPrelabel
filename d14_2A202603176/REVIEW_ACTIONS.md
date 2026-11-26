@@ -1,6 +1,8 @@
 # Vòng kiểm nhãn tiếp theo — có object ID cụ thể
 
-Trạng thái: **Đề xuất kiểm tra, chưa áp dụng thay đổi nhãn**. Đã đọc trực tiếp sidebar của cả 15 frame trên CVAT: đủ 41 hộp A và 242 hộp B; số lượng và thứ tự lớp khớp file tham chiếu. Việc đọc sidebar không xác nhận hộp đã đúng hình học hoặc đúng vật thể.
+Trạng thái: **Đã có bản đề xuất riêng, chưa thay nhãn tham chiếu**. Đã đọc trực tiếp sidebar của cả 15 frame trên CVAT: đủ 41 hộp A và 242 hộp B; số lượng và thứ tự lớp khớp file tham chiếu. Việc đọc sidebar không xác nhận hộp đã đúng hình học hoặc đúng vật thể.
+
+Cập nhật: đã áp dụng 6 lần bỏ hộp và một chỉnh Truck vào **task đề xuất riêng #34**, xem [qa_proposed](qa_proposed/README.md). Nhãn tham chiếu và task gốc A #32/B #33 chưa bị thay thế. Trong bảng dưới, object ID là ID **task gốc #33**; Truck #197 của bản gốc tương ứng Truck **#191 trong task đề xuất #34**. Chiều dài Truck còn là ước lượng, chưa xác nhận.
 
 Task #33 hiện tên `D14-2A202603176-B`. Việc đổi tên đã lưu; hình học và lớp của nhãn vẫn giữ nguyên. Task A #32 không đổi.
 
