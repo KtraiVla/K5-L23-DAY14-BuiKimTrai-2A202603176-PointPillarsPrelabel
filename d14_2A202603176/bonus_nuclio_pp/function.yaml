@@ -1,0 +1,35 @@
+metadata:
+  name: pp-2a202603176
+  namespace: nuclio
+  annotations:
+    name: PointPillars 2A202603176
+    type: detector
+    supported_shape_types: cuboid
+    spec: |
+      [
+        {"id": 1, "name": "Car", "type": "cuboid"},
+        {"id": 2, "name": "Truck", "type": "cuboid"},
+        {"id": 3, "name": "Bus", "type": "cuboid"},
+        {"id": 4, "name": "Cyclist", "type": "cuboid"},
+        {"id": 5, "name": "Pedestrian", "type": "cuboid"}
+      ]
+spec:
+  description: PointPillars 3D LiDAR detector (VF coordinates, CPU)
+  runtime: python:3.10
+  handler: main:handler
+  eventTimeout: 120s
+  build:
+    baseImage: python:3.10-slim
+    directives:
+      preCopy:
+        - kind: RUN
+          value: pip install --no-cache-dir numpy torch --extra-index-url https://download.pytorch.org/whl/cpu
+  triggers:
+    myHttpTrigger:
+      kind: http
+      numWorkers: 1
+      attributes:
+        maxRequestBodySize: 33554432
+  platform:
+    attributes:
+      network: cvat_cvat

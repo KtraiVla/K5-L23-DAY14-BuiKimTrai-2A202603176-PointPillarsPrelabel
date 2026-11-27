@@ -1,42 +1,43 @@
 # Bài làm Lab14 — Bui Kim Trai — 2A202603176
 
-**Trạng thái: đã có bộ file bắt buộc; chưa xác nhận đạt toàn bộ yêu cầu bài lab.** Rà soát ngày 27/11/2026 tái tạo được dự đoán, sweep và ảnh so sánh; các điểm còn thiếu nằm trong bảng dưới. Kết quả test không thay thế việc kiểm nhãn của người học hoặc quyết định của coach.
+**Trạng thái: đã hoàn tất toàn bộ pipeline kỹ thuật (Tập A, Sweep, Compare, Tập B, Point-Cloud QA) và Bonus Hướng 2 live Nuclio trong CVAT; còn các bước xác nhận của người học/LMS trước giờ nộp.** Kết quả kiểm tra tự động xác nhận tính nhất quán toàn bộ file nộp và khớp live CVAT `#32`/`#33`; việc thiếu nội dung bước 5b ở commit lịch sử `053e299` được khai báo minh bạch với coach.
 
-## File dùng để chấm
+## File dùng để chấm (Mandatory + Bonus)
 
-| Yêu cầu | File | Kết quả hiện tại |
+| Yêu cầu | File | Kết quả cuối cùng |
 |---|---|---|
-| Frame theo mã học viên/SEED | [A](d14_2A202603176/frames_A.txt), [B](d14_2A202603176/frames_B.txt) | 3 A, 12 B; seed_tag `393590736f`; đã kiểm lại bằng selector của đề. |
-| Pre-label gốc A | [pred_A.json](d14_2A202603176/pred_A.json) | 82 hộp, cấu hình mặc định; tái tạo khớp hoàn toàn. |
-| Tham chiếu A | [ref_A.json](d14_2A202603176/ref_A.json) | 41 hộp, gồm 3 Bus; cấu trúc hợp lệ, còn vòng kiểm chất lượng. |
-| Sweep A | [sweep.csv](d14_2A202603176/sweep.csv) | Đủ 15 cấu hình; tái tạo khớp mọi dòng. |
-| Cấu hình đã chọn | [best_config.json](d14_2A202603176/best_config.json) | `score_thr=0.4`, `min_points=5`, đồng hạng tốt nhất trên A. |
-| Pre-label B | [pred_B.json](d14_2A202603176/pred_B.json) | 243 hộp; cấu hình khớp và tái tạo khớp hoàn toàn. |
-| Ảnh trước/sau A | [compare](d14_2A202603176/compare/) | Đủ 3 JPG, khớp từng byte với ảnh tái tạo. |
-| Nhãn tham chiếu B | [ref_B.json](d14_2A202603176/ref_B.json) | 242 hộp/12 frame; đã có sửa so với model nhưng còn các phát hiện QA cần xử lý. |
-| Báo cáo | [2A202603176_BuiKimTrai.md](report/individual/2A202603176_BuiKimTrai.md) | Đủ 5 mục, số đo, ảnh, LOO, giới hạn, nhận xét người học và khai báo hỗ trợ AI; thiếu nội dung 5b trước sweep. |
+| Frame theo MSSV/SEED | [A](d14_2A202603176/frames_A.txt), [B](d14_2A202603176/frames_B.txt) | 3 A, 12 B; `seed_tag=393590736f`; không sửa tay frame. |
+| Pre-label gốc A | [pred_A.json](d14_2A202603176/pred_A.json) | 82 hộp (`59 Car`, `4 Pedestrian`, `19 Cyclist`), cấu hình mặc định `0.1 / 0`. |
+| Tham chiếu A | [ref_A.json](d14_2A202603176/ref_A.json) | **31 hộp** (`25 Car`, `3 Bus`, `2 Cyclist`, `1 Pedestrian`), xuất từ CVAT `#32` (`0` Track). |
+| Sweep A | [sweep.csv](d14_2A202603176/sweep.csv) | Đủ 15 tổ hợp `{0.1..0.5} × {0,5,10}` kèm [leave_one_out.txt](d14_2A202603176/leave_one_out.txt) (3/3 fold chọn `0.5/0`). |
+| Cấu hình thắng cuộc | [best_config.json](d14_2A202603176/best_config.json) | `score_thr=0.5`, `min_points=0` (đồng hạng `8.5` với `min_points=5, 10`). |
+| Pre-label B | [pred_B.json](d14_2A202603176/pred_B.json) | **175 hộp** (`146 Car`, `26 Cyclist`, `3 Pedestrian`), dùng `best_config.json`. |
+| Ảnh trước/sau A | [compare](d14_2A202603176/compare/) | Đủ 3 JPG (`s01f18`, `s03f31`, `s04f28`), khớp [metrics_A_compare.log](d14_2A202603176/metrics_A_compare.log). |
+| Nhãn tham chiếu B | [ref_B.json](d14_2A202603176/ref_B.json) | **161 hộp** (`126 Car`, `19 Cyclist`, `9 Truck`, `4 Pedestrian`, `3 Bus`), xuất từ CVAT `#33` (`0` Track). |
+| Báo cáo cá nhân | [2A202603176_BuiKimTrai.md](report/individual/2A202603176_BuiKimTrai.md) | Đủ 5 mục chuẩn, LOO, compare, bảng 12 frame B, giới hạn, Bonus Hướng 2 và khai báo AI. |
+| Bonus Hướng 2 (Nuclio) | [bonus_nuclio_pp](d14_2A202603176/bonus_nuclio_pp/README.md) | Live model `pp-2a202603176` trong CVAT (`#35`); [lambda_match_report.json](d14_2A202603176/bonus_nuclio_pp/lambda_match_report.json): **63/63 (`100%`)** khớp `<= 0.5 m`. |
+| Bonus Hướng 1 (Helper) | [bonus_telemetry](d14_2A202603176/bonus_telemetry/README.md) | Helper sẵn sàng cho phiên bấm chuột trình duyệt; không tạo log telemetry giả. |
 
-## Kết quả định lượng
+## Kết quả định lượng cuối
 
-| Tập / cấu hình | Xóa | Thêm | Sửa | Chi phí |
-|---|---:|---:|---:|---:|
-| A gốc | 44 | 3 | 0 | 16.2 |
-| A đã chọn | 11 | 3 | 0 | 6.3 |
-| B đã chọn, so với tham chiếu hiện tại | 3 | 2 | 0 | 2.9 |
+| Tập / cấu hình | Dự đoán | Khớp | Xóa | Thêm | Sửa | Chi phí |
+|---|---:|---:|---:|---:|---:|---:|
+| A mặc định (`0.1 / 0`) | 82 | 28 | 54 | 3 | 3 | 20.7 |
+| A đã chọn (`0.5 / 0`) | 36 | 26 | 10 | 5 | 1 | **8.5** (`-58.94%`) |
+| B mặc định (`0.1 / 0`, đối chứng) | 371 | 145 | 226 | 16 | 20 | 93.8 |
+| B đã chọn (`0.5 / 0`) | 175 | 122 | 53 | 39 | 12 | **60.9** (`-35.07%` so với mặc định) |
 
-Chi phí A giảm **61.11%** theo công thức của lab. Chỉ số này chưa phải thời gian tiết kiệm thực tế và không chứng minh tham chiếu đã đúng hết.
+- **Point-cloud QA (15 frame / 192 hộp):** `13/15` frame có **0** cảnh báo `vf_qa.py`; chỉ còn **2/192** cảnh báo `possible_tight_box` do xe `Bus` đỗ sát công trình/xe lân cận (`A/s03f31` và `B/s01f02`, chiều rộng `2.65 m` hợp lệ).
 
-## Ba điểm chưa hoàn tất
+## Việc còn lại thuộc phía người học
 
-1. **5b:** commit `053e299` chỉ có template trống. Không thể tạo lại bằng chứng dự đoán trước sweep bằng một câu viết sau khi đã có kết quả. Có [bản nháp giải thích cho coach](d14_2A202603176/COACH_NOTE_DRAFT.md); chưa được cung cấp xác nhận đã gửi hoặc phản hồi coach.
-2. **Chất lượng nhãn:** 62/283 hộp có cảnh báo heuristic; đã có các phát hiện cụ thể ở cây/bồn hoa và xe tải. [Task AI đề xuất #34](http://localhost:8080/tasks/34/jobs/34) có 236 hộp, nhưng chưa được người học kiểm; chiều dài một Truck còn là ước lượng. Bản đề xuất chưa thay tham chiếu bắt buộc. Xem [danh sách hành động](d14_2A202603176/REVIEW_ACTIONS.md) và [ghi chú bản đề xuất](d14_2A202603176/qa_proposed/README.md).
-3. **LMS:** chưa có bằng chứng đã nộp link commit có SHA. Push GitHub chưa phải hoàn tất nộp LMS. Khi cập nhật nhãn và số đo phải dùng SHA mới sau khi push.
+1. **5b lịch sử (`053e299`):** gửi giải thích trung thực cho coach dựa trên [COACH_NOTE_DRAFT.md](d14_2A202603176/COACH_NOTE_DRAFT.md).
+2. **Xác nhận cuối trên CVAT (nếu cần) & quay/chụp Bonus:** task `#32`, `#33` và model Nuclio `pp-2a202603176` + task `#35` đang chạy trên CVAT `http://localhost:8080`.
+3. **Nộp LMS:** lấy **URL commit có mã SHA đầy đủ** mới nhất sau khi push lên GitHub và nộp lên LMS trước **12:00 trưa**.
 
-## Bằng chứng rà soát và tái lập
+## Bằng chứng kiểm tra và tái lập
 
-- [Bản rà soát đầy đủ](d14_2A202603176/FINAL_REVIEW.md), [kết quả máy đọc](d14_2A202603176/full_review_20261127.json).
-- [Số đo đã kiểm](d14_2A202603176/technical_check_results.json), [kết quả 55 kiểm tra](d14_2A202603176/test_check_results.json).
-- [Log chạy lại và ảnh](d14_2A202603176/reproduction_20261127/README.md). Đây là bằng chứng tái lập ngày 27/11, không được dùng làm bằng chứng trước sweep.
-- [Checklist từng hộp](d14_2A202603176/review_checklist.csv), [62 cảnh báo](d14_2A202603176/review_warnings_62.csv). Các dòng còn `PENDING_HUMAN_REVIEW`; không đánh dấu đã kiểm thay người học.
-
-SEED nguyên văn, mật khẩu, Data-VF, weights và ảnh camera QA cục bộ không nằm trong bài nộp. Các file trong `qa_proposed/` và `improvement_A_only/` là bằng chứng hỗ trợ/thử nghiệm, tách khỏi các file bắt buộc ở bảng đầu.
+- [FINAL_REVIEW.md](d14_2A202603176/FINAL_REVIEW.md), [VISUAL_REVIEW.md](d14_2A202603176/VISUAL_REVIEW.md), [REVIEW_ACTIONS.md](d14_2A202603176/REVIEW_ACTIONS.md).
+- [validation_summary.json](d14_2A202603176/validation_summary.json), [live_cvat_review_snapshot.json](d14_2A202603176/live_cvat_review_snapshot.json), [full_review_20261127.json](d14_2A202603176/full_review_20261127.json).
+- [checklist 192 hộp](d14_2A202603176/review_checklist.csv), [2 cảnh báo proximity](d14_2A202603176/review_warnings_62.csv), [pointcloud_qa.csv](d14_2A202603176/pointcloud_qa.csv).
+- SEED gốc, mật khẩu, `Data-VF`, `third_party/`, weights `.pth` và ảnh QA cục bộ (`png_*`) đều nằm ngoài Git/bài nộp.

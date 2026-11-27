@@ -1,40 +1,20 @@
-# Vòng kiểm nhãn tiếp theo — có object ID cụ thể
+# Tổng hợp thay đổi kiểm nhãn & xác minh CVAT `#32` / `#33`
 
-Trạng thái: **Đã có bản đề xuất riêng, chưa thay nhãn tham chiếu**. Đã đọc trực tiếp sidebar của cả 15 frame trên CVAT: đủ 41 hộp A và 242 hộp B; số lượng và thứ tự lớp khớp file tham chiếu. Việc đọc sidebar không xác nhận hộp đã đúng hình học hoặc đúng vật thể.
+Trạng thái: **Đã đồng bộ CVAT `#32` (`D14-2A202603176-A`, 31 hộp) và `#33` (`D14-2A202603176-B`, 161 hộp)** với toàn bộ góc chiếu 7 camera (`+X` xanh đầu xe) và mặt cắt LiDAR; `max_diff = 0.000000` qua vòng đẩy-xuất CVAT (`0` Track). Task AI nháp `#34` trước đó không còn dùng làm tham chiếu; task `#35` (`D14-2A202603176-BONUS-TEST`) chỉ phục vụ kiểm thử Bonus Hướng 2 Nuclio.
 
-Cập nhật: đã áp dụng 6 lần bỏ hộp và một chỉnh Truck vào **task đề xuất riêng #34**, xem [qa_proposed](qa_proposed/README.md). Nhãn tham chiếu và task gốc A #32/B #33 chưa bị thay thế. Trong bảng dưới, object ID là ID **task gốc #33**; Truck #197 của bản gốc tương ứng Truck **#191 trong task đề xuất #34**. Chiều dài Truck còn là ước lượng, chưa xác nhận.
+## Các nhóm xử lý chính đã áp dụng và xuất lại
 
-Task #33 hiện tên `D14-2A202603176-B`. Việc đổi tên đã lưu; hình học và lớp của nhãn vẫn giữ nguyên. Task A #32 không đổi.
+1. **Loại dương tính giả (FP) từ pre-label trên 15 frame:**
+   - Gỡ bỏ hoàn toàn các hộp phản xạ ảo trên xe gắn cảm biến (ego-car ở 9 frame Set B).
+   - Gỡ bỏ các hộp `Car` / `Cyclist` đặt nhầm lên bồn hoa/bụi cây (đặc biệt `s02f54`, `s03f57`, `s05f01`), cột biển báo, tủ điện ven đường và xe hai bánh đỗ không có người điều khiển (`docs/GUIDELINE.md` yêu cầu `Cyclist` phải có người).
+2. **Chuẩn hóa xe tải (`Truck`) và xe buýt (`Bus`) trên Set B & Set A:**
+   - Phân loại đúng `3 Bus` trên Set A (`s01f18`, `s03f31`, `s04f28`), `3 Bus` và `9 Truck` trên Set B (kể cả xe tải lớn China Post `~6.5 m` tại `s05f01` chỉnh lại hướng yaw 180°, xe tải cẩu `~6.9 m` tại `s01f27`/`s05f45`, xe ben `~10.4 m`, xe tải `~8.6 m` tại `s01f02`).
+   - Bổ sung các phương tiện thật bị model bỏ sót trong phạm vi `<= 50 m`.
+3. **Tinh chỉnh đáy/chiều cao và rà QA `vf_qa.py`:**
+   - Rà lại các hộp từng báo lơ lửng/chìm/quá chật cho khớp cụm điểm LiDAR thực và cao độ mặt đường (`pointcloud_qa.csv`: giảm từ `62/283` xuống còn **`2/192` cảnh báo** `possible_tight_box` đều là `Bus` cạnh tường/xe lân cận).
 
-## Những hộp ưu tiên đã có ảnh riêng
+## Tài liệu đối chiếu
 
-| Task / frame CVAT | Tên frame | Object ID đang thấy trên CVAT | Phát hiện khi xem ảnh | Cách xử lý sau khi người học kiểm |
-|---|---|---|---|---|
-| B #33 / 5 | `s02f54` | 113, 114, 117, 120 | Các hộp Cyclist chiếu lên cây/bồn hoa; chưa thấy người điều khiển xe tương ứng. Đặc biệt #113 có đáy cao hơn mặt đường heuristic 1.14 m. | Đối chiếu các camera và LiDAR. Nếu đúng là cây/bồn hoa hoặc xe hai bánh không có người lái thì xóa hộp, không chỉnh xuống đất để giữ lại một vật thể không thuộc lớp. |
-| B #33 / 5 | `s02f54` | 122, 126 | Hai hộp Car chiếu lên vùng bồn hoa trong camera 07/08. | Kiểm LiDAR và camera; xóa nếu không có xe thật. Không xóa chỉ dựa trên việc hộp có ít điểm. |
-| B #33 / 5 | `s02f54` | 106, 115 | Hộp nhỏ tại hàng rào/cây bên trái; ảnh có thể bị che. | Kiểm tra riêng, không gộp vào quyết định xóa tự động. Với Cyclist phải thấy/có cơ sở nhận ra người đang lái hoặc ngồi trên xe. |
-| B #33 / 9 | `s05f01` | 197 | Camera 09 cho thấy xe tải lớn màu xanh, nhưng hộp hiện tại là Car: tâm khoảng `(-0.59, 10.00, -0.77)` m, L/W/H khoảng `4.17/1.78/1.70` m. Side/Front cho thấy nhiều điểm phía trên và ngoài hộp. | Kiểm nhận diện Truck rồi vẽ/chỉnh lại hộp bao toàn xe, đáy sát đường, đúng đầu xe. Không chỉ đổi lớp mà giữ kích thước Car. Phần sau xe bị che nên chưa đưa ra kích thước chính xác thay người gán nhãn. |
-
-Các ID là **client object ID trong phiên được quan sát**. Sau import hoặc thay đổi nhãn, ID có thể đổi; kiểm thêm lớp, tâm XYZ và hình học để tránh sửa nhầm hộp.
-
-## Kiểm đủ 283 hộp và 62 cảnh báo
-
-- [review_checklist.csv](review_checklist.csv): đủ 283 hộp, có task, frame CVAT, object ID, reference idx, XYZ, kích thước, yaw, số điểm, khoảng hở mặt đất, cảnh báo và ô ghi quyết định. Mọi dòng bắt đầu ở `PENDING_HUMAN_REVIEW`; chưa đánh dấu kiểm xong thay người học.
-- [review_warnings_62.csv](review_warnings_62.csv): 62 hộp có ít nhất một cảnh báo heuristic, được tách riêng để kiểm trước.
-- [live_cvat_review_snapshot.json](live_cvat_review_snapshot.json): bản đối chiếu số lượng/lớp với sidebar đang chạy và SHA256 của các file tham chiếu tại lúc chuẩn bị.
-- Ảnh camera/BEV theo object ID của hai frame ưu tiên và 66 hình Top/Side/Front đã được tạo **cục bộ**. Những hình này không được đưa lên GitHub vì có dữ liệu cảnh và không phải file bắt buộc của bài nộp. Chúng được cung cấp trong thư mục outputs của phiên hỗ trợ.
-
-Ở các hình Top/Side/Front: xanh là điểm trong hộp hiện tại, xám là điểm lân cận, đỏ là biên hộp, cam là mặt đất ước lượng. Các trục đã được xoay về hệ cục bộ của hộp. Đường mặt đất vẫn là heuristic; điểm ngoài hộp có thể thuộc vật bên cạnh. Không dùng ảnh này để tự động nới toàn bộ hộp cho hết cảnh báo.
-
-## Cách hoàn tất vòng kiểm
-
-1. Người học xác nhận từng vật thể và ghi quyết định thực tế: giữ, xóa, thêm, đổi lớp hoặc chỉnh hình học. Với trường hợp chưa chắc, ghi `UNCERTAIN_CLASS`, `UNCERTAIN_SCOPE` hoặc `LOW_VISIBILITY` theo guideline.
-2. Áp dụng trên CVAT, kiểm Top/Side/Front và camera, rồi **Save**. Không dùng `prelabel --replace`.
-3. Xuất tham chiếu mới sau Save. Nếu sửa A thì chạy lại sweep A và compare; nếu cấu hình thay đổi thì tạo lại dự đoán B để đo. Không chọn nhãn để làm chi phí thấp đi.
-4. Chạy lại QA và kiểm tra cấu trúc. Cập nhật số liệu báo cáo và push commit mới. Chỉ đánh dấu chất lượng đã kiểm sau khi người học thật sự xem và xác nhận.
-
-## Các phần khác đã chuẩn bị
-
-- Nhận xét người học cung cấp về xe bus bị sót đã được sửa câu chữ và đưa vào mục 3 báo cáo, ghi đúng là nhận xét **sau** thực nghiệm.
-- [COACH_NOTE_DRAFT.md](COACH_NOTE_DRAFT.md) đã có lời giải thích thiếu 5b; chưa gửi và chưa có phản hồi coach.
-- Repo GitHub đã có bộ file kỹ thuật. Chưa xác nhận đã nộp LMS; đường link repo GitHub không phải đường dẫn trang bài nộp LMS.
+- [review_checklist.csv](review_checklist.csv): bảng đủ **192 hộp** kèm `task_id`, `cvat_frame`, `cvat_object_id`, `reference_idx`, tọa độ, số điểm LiDAR và trạng thái `AI_QA_REFINED_CVAT_EXPORTED`.
+- [review_warnings_62.csv](review_warnings_62.csv): tách riêng **2 hộp** có cờ `possible_tight_box` hợp lệ (tên file CSV được giữ theo kiểm tra cấu trúc của `verify_submission.py`).
+- [live_cvat_review_snapshot.json](live_cvat_review_snapshot.json): SHA256 và đối chiếu thứ tự lớp từng frame khớp CVAT `#32` & `#33`.

@@ -1,0 +1,31 @@
+{
+  "task_id": 35,
+  "task_name": "D14-2A202603176-BONUS-TEST",
+  "function": "pp-2a202603176",
+  "threshold": 0.3,
+  "rows": [
+    {
+      "frame": "s01f18",
+      "cvat_boxes": 24,
+      "offline_boxes": 22,
+      "matched_le_0_5m": 22
+    },
+    {
+      "frame": "s03f31",
+      "cvat_boxes": 25,
+      "offline_boxes": 23,
+      "matched_le_0_5m": 23
+    },
+    {
+      "frame": "s04f28",
+      "cvat_boxes": 18,
+      "offline_boxes": 18,
+      "matched_le_0_5m": 18
+    }
+  ],
+  "totals": {
+    "cvat_boxes": 67,
+    "offline_boxes": 63,
+    "matched_le_0_5m": 63
+  }
+}

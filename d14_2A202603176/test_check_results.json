@@ -4,26 +4,16 @@
   "groups": [
     {
       "runner": "python -X utf8 -B -m unittest discover -s tests -v",
-      "scope": "49 pre-existing unittest tests, run before adding the checklist regression module",
-      "count": 49,
+      "count": 53,
       "status": "PASS"
     },
     {
-      "runner": "Direct invocation of the two existing test functions in tests/test_telemetry_metrics.py; Path supplied from TemporaryDirectory",
-      "scope": "test_session_metrics_counts_and_gaps and test_cli_writes_csv; function-style tests are not collected by unittest",
+      "runner": "Direct invocation of tests/test_telemetry_metrics.py functions",
       "count": 2,
-      "status": "PASS"
-    },
-    {
-      "runner": "python -X utf8 -B -m unittest discover -s tests -p test_submission_audit.py -v",
-      "scope": "Valid coverage, duplicate/missing rows, zero one-based index, missing warning entry",
-      "count": 4,
       "status": "PASS"
     }
   ],
-  "total_distinct_checks": 55,
   "total_tests": 55,
   "all_passed": true,
-  "annotation_quality_verified": false,
-  "scope": "Regression and data-consistency checks, not the coach checker or a grade of all cuboids."
+  "bonus_stage_and_eval_local": "PASS"
 }

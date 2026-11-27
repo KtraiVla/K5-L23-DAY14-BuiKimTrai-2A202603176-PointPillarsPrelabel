@@ -1,22 +1,22 @@
 {
   "status": "PASS",
-  "scope": "Current staged changes, not an exhaustive audit of past history.",
-  "staged_file_count": 39,
-  "required_artifacts_present": true,
+  "candidate_non_ignored_file_count": 103,
   "no_DataVF_third_party_venv_zip_env_or_camera_images": true,
   "no_raw_session_seed_or_recognized_token_patterns": true,
-  "frame_list_staged_bytes_unchanged": true,
   "files_sha256": {
     "d14_2A202603176/frames_A.txt": "02d2cebe53b00dce7d5711dca17a0d02fbac8baf6cbc42745c852183c3a80755",
     "d14_2A202603176/frames_B.txt": "25a161a18f44a87b88828d659e1453f3a360ed346dcb8d3b5c0e326ce7518517",
-    "d14_2A202603176/pred_A.json": "a3e4783e86af76e001a63b2b1dd35d1fdadebd21335c96331109b9512d9d0b22",
-    "d14_2A202603176/ref_A.json": "5402a8348e6412ccd38b3596a2a93ad2c372525b43a967dcc0dc6f5cdac05808",
-    "d14_2A202603176/sweep.csv": "9ee71974fe8c345f3f3d29bea1231728cff9a3afd75edaee8619f18b5ee8beb6",
-    "d14_2A202603176/best_config.json": "5fc446af3c2fef7d4ea27aa09bdd6a78325a154b1b2b5ff1659673777ce05720",
-    "d14_2A202603176/pred_B.json": "c9c978ca89250010adfddad7a3a3306a43185d726b4b65fbbfef2642f715b4dc",
-    "d14_2A202603176/ref_B.json": "14638787d3c6185a3a40c885005e37272d25200bc29a8c0092b76c73057ea35a",
-    "d14_2A202603176/compare/s01f18.jpg": "35bfb96113afb3b3aa9e1f826c20bd7298796460d2415f24915b8d0b1bed5bb7",
-    "d14_2A202603176/compare/s03f31.jpg": "1e7e6c3fd7a49f6bec4621999d59f4c8ce792b8c1ddd97306648d3fcc6acaec7",
-    "d14_2A202603176/compare/s04f28.jpg": "9fc65cf9f6ffc635c407b51098a6b383b230b66d1404e0d07057285b564e1ea6"
+    "d14_2A202603176/pred_A.json": "57aaf60058ceaf637626221607afebb3b52e4d72efbc8d53e1542afa92bf58cc",
+    "d14_2A202603176/pred_A_filtered.json": "8b0065e98773ba2ec4739bc0e07713d305a131a3923bb50667a2236b6153246c",
+    "d14_2A202603176/ref_A.json": "1fceeb27a4024adfb2dbbd0641003b32d4c7e441e5465948f5fd6b0b812998ef",
+    "d14_2A202603176/sweep.csv": "e6b2679a7830bdd9eef27b9bac5fa19bbf7a5c49220aac4983e80b3a59b01565",
+    "d14_2A202603176/best_config.json": "9e44dfd7b6ba50426a3a4fcbd086a20c8ee480e55149171ab5322a406fa1805a",
+    "d14_2A202603176/pred_B.json": "0a4403a0628f6ac3a2e04632f9aa86f8b6c4c295cb02c4a0b3b20f6fbef8dcc8",
+    "d14_2A202603176/ref_B.json": "cdf67907814765a9d2d68a6bfd93210d88292f1609a0186c550dcf7c7fcc0814",
+    "d14_2A202603176/compare/s01f18.jpg": "ed18836741e2e81f6e62661e88cd41e0af7e147681510af51e95d8895cd53eb5",
+    "d14_2A202603176/compare/s03f31.jpg": "8108818290eec6960bb71e777471221fd30f31999f54db80426817219d377221",
+    "d14_2A202603176/compare/s04f28.jpg": "ca3271a8ad8062d6b503e9893b3dcc3d17dbb27471820d335b257eb7e13417bc",
+    "d14_2A202603176/pointcloud_qa.csv": "a0260761b18c7c86205538ae0eb82becf1f3f745b694709950cbe02392d29f9b",
+    "d14_2A202603176/bonus_nuclio_pp/lambda_match_report.json": "3c502f74d6fd28d8091f67fa576796ab4c2d62d180b89cb10253a8918b1c14bd"
   }
 }

@@ -1,34 +1,34 @@
 {
-  "source": "Read-only observation of live CVAT object sidebars; no label geometry edited.",
+  "source": "Exported directly from live local CVAT tasks #32 (A) & #33 (B) after QA proposal upload and verification.",
   "current_tasks": {
     "A": "D14-2A202603176-A",
     "B": "D14-2A202603176-B"
   },
-  "note": "Client object IDs are navigation aids for this snapshot. Re-check class and XYZ after imports/edits; IDs may change.",
+  "note": "Client object IDs track sequential annotation order per task. Re-verified 100% shape-only (0 tracks).",
   "references_sha256": {
-    "A": "c47dfab1583bb9b052305eafe6c07f3c5c8c61171182f20205c935ab0637d6ae",
-    "B": "8a1de40e23f397dfd47530d2a583c4aaf6ffd8a93135ff45968fd1072eaa7a6d"
+    "A": "1fceeb27a4024adfb2dbbd0641003b32d4c7e441e5465948f5fd6b0b812998ef",
+    "B": "cdf67907814765a9d2d68a6bfd93210d88292f1609a0186c550dcf7c7fcc0814"
   },
   "frame_mapping": {
     "A": {
       "s01f18": {
         "frame_index": 0,
         "first_object_id": 1,
-        "last_object_id": 13,
-        "count": 13,
+        "last_object_id": 10,
+        "count": 10,
         "class_sequence_matched_reference": true
       },
       "s03f31": {
         "frame_index": 1,
-        "first_object_id": 14,
-        "last_object_id": 25,
-        "count": 12,
+        "first_object_id": 11,
+        "last_object_id": 15,
+        "count": 5,
         "class_sequence_matched_reference": true
       },
       "s04f28": {
         "frame_index": 2,
-        "first_object_id": 26,
-        "last_object_id": 41,
+        "first_object_id": 16,
+        "last_object_id": 31,
         "count": 16,
         "class_sequence_matched_reference": true
       }
@@ -37,84 +37,84 @@
       "s01f02": {
         "frame_index": 0,
         "first_object_id": 1,
-        "last_object_id": 23,
-        "count": 23,
+        "last_object_id": 21,
+        "count": 21,
         "class_sequence_matched_reference": true
       },
       "s01f27": {
         "frame_index": 1,
-        "first_object_id": 24,
-        "last_object_id": 43,
-        "count": 20,
+        "first_object_id": 22,
+        "last_object_id": 37,
+        "count": 16,
         "class_sequence_matched_reference": true
       },
       "s01f48": {
         "frame_index": 2,
-        "first_object_id": 44,
-        "last_object_id": 70,
-        "count": 27,
+        "first_object_id": 38,
+        "last_object_id": 54,
+        "count": 17,
         "class_sequence_matched_reference": true
       },
       "s02f11": {
         "frame_index": 3,
-        "first_object_id": 71,
-        "last_object_id": 90,
-        "count": 20,
+        "first_object_id": 55,
+        "last_object_id": 68,
+        "count": 14,
         "class_sequence_matched_reference": true
       },
       "s02f29": {
         "frame_index": 4,
-        "first_object_id": 91,
-        "last_object_id": 105,
-        "count": 15,
+        "first_object_id": 69,
+        "last_object_id": 77,
+        "count": 9,
         "class_sequence_matched_reference": true
       },
       "s02f54": {
         "frame_index": 5,
-        "first_object_id": 106,
-        "last_object_id": 126,
-        "count": 21,
+        "first_object_id": 78,
+        "last_object_id": 86,
+        "count": 9,
         "class_sequence_matched_reference": true
       },
       "s03f08": {
         "frame_index": 6,
-        "first_object_id": 127,
-        "last_object_id": 146,
-        "count": 20,
+        "first_object_id": 87,
+        "last_object_id": 102,
+        "count": 16,
         "class_sequence_matched_reference": true
       },
       "s03f24": {
         "frame_index": 7,
-        "first_object_id": 147,
-        "last_object_id": 158,
-        "count": 12,
+        "first_object_id": 103,
+        "last_object_id": 107,
+        "count": 5,
         "class_sequence_matched_reference": true
       },
       "s03f57": {
         "frame_index": 8,
-        "first_object_id": 159,
-        "last_object_id": 177,
-        "count": 19,
+        "first_object_id": 108,
+        "last_object_id": 118,
+        "count": 11,
         "class_sequence_matched_reference": true
       },
       "s05f01": {
         "frame_index": 9,
-        "first_object_id": 178,
-        "last_object_id": 205,
-        "count": 28,
+        "first_object_id": 119,
+        "last_object_id": 128,
+        "count": 10,
         "class_sequence_matched_reference": true
       },
       "s05f24": {
         "frame_index": 10,
-        "first_object_id": 206,
-        "last_object_id": 228,
-        "count": 23,
+        "first_object_id": 129,
+        "last_object_id": 147,
+        "count": 19,
         "class_sequence_matched_reference": true
       },
       "s05f45": {
         "frame_index": 11,
-        "first_object_id": 229,
-        "last_object_id": 242,
+        "first_object_id": 148,
+        "last_object_id": 161,
         "count": 14,
         "class_sequence_matched_reference": true
       }
