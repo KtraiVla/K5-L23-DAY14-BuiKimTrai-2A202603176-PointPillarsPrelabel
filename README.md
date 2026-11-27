@@ -1,5 +1,7 @@
 # Day 14 — Pre-label 3D bằng PointPillars pre-trained (VF LiDAR)
 
+Bài nộp của **Bui Kim Trai — 2A202603176**: [báo cáo cá nhân](report/individual/2A202603176_BuiKimTrai.md), [file kết quả bắt buộc và bằng chứng bonus](d14_2A202603176/). Mã dùng để sinh frame là `--student 2A202603176`.
+
 **Bài cá nhân.** Cuối buổi lý thuyết sáng, bạn có 10 phút cài đặt và 35 phút chạy thử. Buổi chiều, bạn làm tập A và B. Nộp link commit GitHub (có SHA) lên LMS trước **12:00 trưa hôm sau** (GMT+7).
 
 Tài liệu: [SUBMISSION.md](SUBMISSION.md) (nộp gì, nộp ở đâu) · [RUBRIC.md](RUBRIC.md) (chấm điểm) · [CHECKPOINTS.md](CHECKPOINTS.md) (tự kiểm từng bước) · [RULES.md](RULES.md) (quy định) · [report/individual/MSSV_HoTen.md](report/individual/MSSV_HoTen.md) (template báo cáo)

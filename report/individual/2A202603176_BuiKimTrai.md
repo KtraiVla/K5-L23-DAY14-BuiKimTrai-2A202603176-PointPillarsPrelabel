@@ -1,6 +1,6 @@
 # Báo cáo Day 14 — Bui Kim Trai — 2A202603176
 
-- Mã học viên rút gọn (3 số cuối): `176` (bộ frame [frames_A.txt](../../d14_2A202603176/frames_A.txt), [frames_B.txt](../../d14_2A202603176/frames_B.txt) được sinh thực tế bằng `--student 2A202603176`).
+- Mã học viên dùng với `--student`: `2A202603176`; bộ frame được sinh bằng đúng mã này tại [frames_A.txt](../../d14_2A202603176/frames_A.txt) và [frames_B.txt](../../d14_2A202603176/frames_B.txt).
 - `seed_tag`: `393590736f`; SEED không được lưu trong bài nộp.
 - Tập A (3 frame): `s01f18`, `s03f31`, `s04f28`.
 - Tập B (12 frame): `s01f02`, `s01f27`, `s01f48`, `s02f11`, `s02f29`, `s02f54`, `s03f08`, `s03f24`, `s03f57`, `s05f01`, `s05f24`, `s05f45`.
