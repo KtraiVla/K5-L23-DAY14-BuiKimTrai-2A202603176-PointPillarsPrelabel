@@ -1,6 +1,6 @@
 # Tự rà soát Lab14 — 2A202603176
 
-**Cập nhật cuối (27/11/2026):** Toàn bộ pipeline bắt buộc trên tập nhãn đã làm sạch (**31 hộp Tập A**, **161 hộp Tập B**, tổng **192 hộp** từ CVAT `#32/#33`) và **Bonus Hướng 2** (Nuclio `pp-2a202603176` chạy live trong CVAT) đã hoàn tất và qua kiểm tra nhất quán kỹ thuật. Thiếu sót lịch sử duy nhất là nội dung bước 5b tại commit `053e299` (giữ nguyên lịch sử Git, có `COACH_NOTE_DRAFT.md`). Việc nộp link commit SHA lên LMS thuộc thao tác của người học trên trình duyệt.
+**Cập nhật cuối (27/11/2026):** Toàn bộ pipeline bắt buộc trên tập nhãn đề xuất đã rà QA (**31 hộp Tập A**, **161 hộp Tập B**, tổng **192 hộp** từ CVAT `#32/#33`, trong đó bật `occluded=true` cho `12/31` hộp A và `46/161` hộp B) và phần kỹ thuật **Bonus Hướng 2** (Nuclio `pp-2a202603176` chạy live trong CVAT) đã hoàn tất và qua kiểm tra nhất quán (`NOT_CERTIFIED` chờ xác nhận người học). Còn thiếu: (1) nội dung bước 5b tại commit `053e299` (có `COACH_NOTE_DRAFT.md`), (2) xác nhận cuối của người học trên CVAT, (3) video ngắn minh họa Bonus Hướng 2 và (4) nộp link commit SHA lên LMS.
 
 ## Đối chiếu yêu cầu
 
@@ -12,7 +12,7 @@
 | Giữ pre-label gốc A | ĐẠT | `pred_A.json`: 82 hộp (`0.1 / 0`), `pred_A_filtered.json`: 36 hộp (`0.5 / 0`). |
 | Nhãn tham chiếu A (`ref_A.json`) | ĐẠT | **31 hộp** (`25 Car`, `3 Bus`, `2 Cyclist`, `1 Pedestrian`), xuất từ CVAT `#32` (`0` Track). |
 | Dự đoán trước sweep 5b | THIẾU LỊCH SỬ | Commit `053e29949860394539643056ae41a1ad0f36d7a0` chỉ có template. Không backdate; có `COACH_NOTE_DRAFT.md`. |
-| Sweep A & chọn cấu hình | ĐẠT | `sweep.csv` đủ 15 tổ hợp `{0.1..0.5}×{0,5,10}`; `best_config.json` chọn `score_thr=0.5, min_points=0` (`cost=8.5`, LOO 3/3 fold chọn `0.5/0`). |
+| Sweep A & chọn cấu hình | ĐẠT | `sweep.csv` đủ 15 tổ hợp `{0.1..0.5}×{0,5,10}`; `best_config.json` chỉ đổi **1 tham số** `score_thr: 0.1 -> 0.5` (`min_points` giữ `0`, đồng hạng `8.5` với `5, 10`; LOO 3/3 fold chọn `0.5/0`). |
 | Compare & số đo A | ĐẠT | Đủ 3 JPG ở `compare/`; chi phí giảm **`20.7 -> 8.5` (`-58.94%`, làm tròn `59%`)**. |
 | Nhận xét cá nhân / đối chiếu 5b | ĐẠT phần nhận xét | Có nhận xét thật về sót `Bus` sau thực nghiệm; khai báo trung thực không phải bằng chứng 5b. |
 | Pre-label B (`pred_B.json`) | ĐẠT | **175 hộp** dùng `best_config.json` (`0.5 / 0`). |
@@ -21,7 +21,7 @@
 | Point-cloud QA (15 frame / 192 hộp) | ĐẠT | `13/15` frame **0 cảnh báo**; chỉ `2/192` cờ `possible_tight_box` hợp lệ do vật thể/tường lân cận (`s03f31` & `s01f02` Bus). |
 | Báo cáo đúng template | ĐẠT | [2A202603176_BuiKimTrai.md](../report/individual/2A202603176_BuiKimTrai.md) đủ 5 mục chuẩn, zero placeholder, link hợp lệ, khai báo AI minh bạch. |
 | Bảo mật & Git sạch | ĐẠT | Không commit `Data-VF`, `third_party/`, `.venv`, `.env`, `.pth`, `png_*`, SEED gốc hay mật khẩu. |
-| **Bonus Hướng 2 (CVAT Serverless)** | **ĐẠT LIVE** | Nuclio `pp-2a202603176` trạng thái `ready (1/1)`, thử nghiệm API trên task `#35` khớp **63/63 (`100%`)** `<= 0.5 m` với `pred_A` (`threshold=0.3`). |
+| **Bonus Hướng 2 (CVAT Serverless)** | **CHẠY LIVE (THIẾU VIDEO NGẮN)** | Nuclio `pp-2a202603176` trạng thái `ready (1/1)`, thử nghiệm API trên task `#35` khớp **63/63 (`100%`)** `<= 0.5 m` với `pred_A` (`threshold=0.3`); còn thiếu video ngắn/link video theo `bonus/README.md`. |
 | Bonus Hướng 1 (Telemetry Helper) | TOOLING SẴN SÀNG | `bonus_telemetry/analyze_bonus.py` sẵn sàng; không tạo log bấm chuột giả. |
 | Nộp link commit SHA trên LMS | CHỜ NGƯỜI HỌC | Thực hiện sau khi nhận commit SHA cuối cùng của lần push này. |
 

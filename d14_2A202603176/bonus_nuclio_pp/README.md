@@ -24,7 +24,9 @@ nuctl create project cvat --platform local
 nuctl deploy --project-name cvat --path /mnt/d/.../out/nuclio_pp_2a202603176 --file .../function.yaml --platform local
 nuctl get functions --platform local
 
-# 3) Gọi thử trên task thử nghiệm (không chạy đè lên D14-2A202603176-A/B đang nộp)
+# 3) Gọi thử trên task thử nghiệm #35 (không chạy đè lên D14-2A202603176-A/B đang nộp)
 curl -u <user>:<pass> -H "Content-Type: application/json" -X POST http://localhost:8080/api/lambda/requests \
-  -d '{"function": "pp-2a202603176", "task": 34, "threshold": 0.3, "cleanup": true}'
+  -d '{"function": "pp-2a202603176", "task": 35, "threshold": 0.3, "cleanup": true}'
 ```
+
+> **Lưu ý minh chứng video (`bonus/README.md`):** Chức năng Nuclio `pp-2a202603176` và phép đo so khớp trên task `#35` (`63/63` hộp khớp `<= 0.5 m` với `pred_A.json` ở ngưỡng `0.3`) đã chạy xong và lưu ở `lambda_match_report.json`; phần video quay màn hình ngắn còn chờ người học tự quay/đính link để hoàn tất đủ bộ minh chứng `+3` điểm.

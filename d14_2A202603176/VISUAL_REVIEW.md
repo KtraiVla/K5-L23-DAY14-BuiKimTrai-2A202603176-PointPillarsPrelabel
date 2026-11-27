@@ -6,8 +6,8 @@ Trạng thái: **ĐÃ RÀ SOÁT & ĐỒNG BỘ LÊN CVAT `#32`/`#33`, CẦN NGƯ
 
 | Hạng mục | Nhãn thô ban đầu | Nhãn sau rà soát QA (`ref_A` + `ref_B`) | Ghi chú |
 |---|---:|---:|---|
-| Tổng hộp Set A (3 frame) | 41 | **31** | Bỏ hộp trên bụi cây/tường/xe hai bánh trống; chỉnh sát 3 `Bus` & xe đỗ. |
-| Tổng hộp Set B (12 frame) | 242 | **161** | Bỏ ego-car ở 9 frame, bỏ hộp cây/tủ điện/rào; sửa/bổ sung `9 Truck` & `3 Bus`. |
+| Tổng hộp Set A (3 frame) | 41 | **31** | Bỏ hộp trên bụi cây/tường/xe hai bánh trống; chỉnh sát 3 `Bus` & xe đỗ; bật `occluded=true` cho 12/31 xe bị che một phần. |
+| Tổng hộp Set B (12 frame) | 242 | **161** | Bỏ ego-car ở 9 frame, bỏ hộp cây/tủ điện/rào; sửa/bổ sung `9 Truck` & `3 Bus`; bật `occluded=true` cho 46/161 xe bị che một phần. |
 | Cảnh báo `vf_qa.py` | 62 / 283 hộp | **2 / 192 hộp** | `13/15` frame đạt **0 cảnh báo**; 0 lỗi thiếu điểm, chìm hay lơ lửng. |
 
 ## Hai cảnh báo proximity còn lại (hợp lệ)

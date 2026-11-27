@@ -1,6 +1,6 @@
 # Báo cáo Day 14 — Bui Kim Trai — 2A202603176
 
-- Mã học viên dùng với `--student`: `2A202603176`.
+- Mã học viên rút gọn (3 số cuối): `176` (bộ frame `d14_2A202603176/frames_A.txt`, `frames_B.txt` được sinh thực tế bằng `--student 2A202603176`).
 - `seed_tag`: `393590736f`; SEED không được lưu trong bài nộp.
 - Tập A (3 frame): `s01f18`, `s03f31`, `s04f28`.
 - Tập B (12 frame): `s01f02`, `s01f27`, `s01f48`, `s02f11`, `s02f29`, `s02f54`, `s03f08`, `s03f24`, `s03f57`, `s05f01`, `s05f24`, `s05f45`.
@@ -27,7 +27,7 @@ Công thức chi phí sửa của lab: `0.3 × xóa + 1.0 × thêm + 0.5 × sử
 | Mặc định: `score_thr=0.1`, `min_points=0` | 82 | 28 | 54 | 3 | 3 | 20.7 |
 | Đã chọn ([best_config.json](../../d14_2A202603176/best_config.json)): `score_thr=0.5`, `min_points=0` | 36 | 26 | 10 | 5 | 1 | 8.5 |
 
-Chỉ hai tham số `score_thr` và `min_points` thay đổi so với mặc định; các tham số voxel (`0.16`), intensity (`clip`), `ground_mode=fixed`, `passes=4`, `nms_thr=0.01`, `range_m=50.0` và quy tắc suy lớp lớn giữ nguyên mặc định.
+Chỉ **một** tham số thay đổi so với cấu hình mặc định: `score_thr: 0.1 -> 0.5`; tham số `min_points` giữ nguyên giá trị mặc định `0` (cả `0`, `5`, `10` cho cùng chi phí `8.5` trên Tập A). Các tham số voxel (`0.16`), intensity (`clip`), `ground_mode=fixed`, `passes=4`, `nms_thr=0.01`, `range_m=50.0` và quy tắc suy lớp lớn giữ nguyên mặc định.
 
 Sweep bắt buộc 15 tổ hợp (`score_thr` ∈ `{0.1, 0.2, 0.3, 0.4, 0.5}` × `min_points` ∈ `{0, 5, 10}`) lưu tại [sweep.csv](../../d14_2A202603176/sweep.csv):
 
@@ -112,7 +112,7 @@ Trong tổng chi phí `60.9`, phần **thêm hộp** chiếm tỷ trọng cao nh
 1. **Tập A chỉ có 3 frame:** ba cấu hình `score_thr=0.5` với `min_points` ∈ `{0, 5, 10}` đồng hạng `8.5`, và dù 3/3 fold leave-one-out đều chọn `0.5 / 0`, ngưỡng `0.5` trên Tập B làm tăng số hộp cần thêm (`16 -> 39`) so với `0.1` dù giảm mạnh chi phí tổng (`93.8 -> 60.9`). Trong điều kiện triển khai thực tế trên cảnh nhiều vật che khuất, một ngưỡng trung bình hơn (như `0.3–0.4`) có thể cân bằng recall tốt hơn khi công thêm cao gấp ~3.3 lần công xóa (`1.0` vs `0.3`).
 2. **Hạn chế domain và lớp của checkpoint gốc:** PointPillars học trên KITTI với 3 lớp `Car`, `Pedestrian`, `Cyclist`; hoàn toàn không được huấn luyện nhãn `Truck` và `Bus`. Vì vậy trên 15 frame VinFast (`3 Bus` ở A; `9 Truck`, `3 Bus` ở B), phần lớn xe tải/xe buýt bị dự đoán thành `Car` nhỏ (dẫn đến lỗi `edit` kích thước) hoặc bị bỏ sót (`add`).
 3. **Chỉ số chi phí là ước lượng hình học:** `correction_cost` dựa trên ngưỡng BEV IoU `0.3` và chênh lệch kích thước/tâm, không phản ánh trọn vẹn thời gian xoay chỉnh từng góc camera trên CVAT hoặc chi phí phân biệt xe máy có người lái vs xe đậu trống.
-4. **Cần rà soát xác nhận cuối của người học:** dù AI đã đối chiếu cả 7 góc camera và 3 mặt cắt điểm LiDAR để lọc sạch 283 hộp thô xuống còn 192 hộp hợp lệ về hình học (cập nhật vào CVAT `#32/#33`), người học vẫn cần mở kiểm tra trực tiếp trên giao diện CVAT cá nhân để xác nhận từng quyết định cuối theo guideline trước khi khóa bài.
+4. **Cần rà soát xác nhận cuối của người học:** AI đã đối chiếu cả 7 góc camera và 3 mặt cắt điểm LiDAR để rà 283 hộp thô thành **192 hộp đề xuất đã tinh chỉnh và xuất lại từ CVAT `#32/#33`** (trong đó đã rà và cập nhật cờ `occluded=true` cho các xe bị che một phần: `12/31` hộp Tập A gồm cả `s01f18 #2, #9` và `s04f28 #19, #25, #28`, cùng `46/161` hộp Tập B). Tuy nhiên, `review_checklist.csv` vẫn giữ trạng thái `AI_QA_REFINED_CVAT_EXPORTED` vì người học vẫn cần trực tiếp mở CVAT xác nhận cuối cùng theo `GUIDELINE.md` trước khi khóa bài.
 5. **Thứ tự và bằng chứng bước 5b:** thiếu nội dung dự đoán trước sweep trong lịch sử Git tại commit `053e299`; phần giải thích trung thực nằm ở mục 1 và [COACH_NOTE_DRAFT.md](../../d14_2A202603176/COACH_NOTE_DRAFT.md).
 
 ---
@@ -136,6 +136,8 @@ Trong tổng chi phí `60.9`, phần **thêm hộp** chiếm tỷ trọng cao nh
 | **Tổng (3 frame)** | **67** | **63** | **63 / 63 (100%)** |
 
 Độ lệch nhỏ +4 hộp sát ngưỡng `0.3` (67 vs 63) đến từ sai số lượng tử hóa kênh `uint8` grayscale trong `.pcd` (`0..255`) so với `float32` intensity nguyên thủy ở `.bin`.
+
+> **Trạng thái hoàn thiện Bonus Hướng 2:** Code handler/yaml, deploy Nuclio `ready` trong CVAT và kết quả so khớp `63/63` hộp đã hoàn tất; **chưa có video quay màn hình ngắn hoặc link video** đính kèm theo tiêu chí `+3` trong `bonus/README.md` (cần người học quay nhanh/bổ sung link trước khi tính đủ tiêu chí trình diễn).
 
 #### Hướng 1 (Phụ): Công cụ phân tích telemetry (`cvat-telemetry-addon.user.js`)
 

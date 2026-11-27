@@ -6,8 +6,8 @@
   },
   "note": "Client object IDs track sequential annotation order per task. Re-verified 100% shape-only (0 tracks).",
   "references_sha256": {
-    "A": "1fceeb27a4024adfb2dbbd0641003b32d4c7e441e5465948f5fd6b0b812998ef",
-    "B": "cdf67907814765a9d2d68a6bfd93210d88292f1609a0186c550dcf7c7fcc0814"
+    "A": "e81524535bf7f12b50f6668ba7a82f1ce35aa7ecd5c7e5cc2bd8813d191f88e3",
+    "B": "024cc85fec64471a6741829ba343dbe5e73bc0915610d88063feef685559751e"
   },
   "frame_mapping": {
     "A": {

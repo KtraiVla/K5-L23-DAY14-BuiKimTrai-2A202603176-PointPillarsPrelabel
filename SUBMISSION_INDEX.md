@@ -15,7 +15,7 @@
 | Ảnh trước/sau A | [compare](d14_2A202603176/compare/) | Đủ 3 JPG (`s01f18`, `s03f31`, `s04f28`), khớp [metrics_A_compare.log](d14_2A202603176/metrics_A_compare.log). |
 | Nhãn tham chiếu B | [ref_B.json](d14_2A202603176/ref_B.json) | **161 hộp** (`126 Car`, `19 Cyclist`, `9 Truck`, `4 Pedestrian`, `3 Bus`), xuất từ CVAT `#33` (`0` Track). |
 | Báo cáo cá nhân | [2A202603176_BuiKimTrai.md](report/individual/2A202603176_BuiKimTrai.md) | Đủ 5 mục chuẩn, LOO, compare, bảng 12 frame B, giới hạn, Bonus Hướng 2 và khai báo AI. |
-| Bonus Hướng 2 (Nuclio) | [bonus_nuclio_pp](d14_2A202603176/bonus_nuclio_pp/README.md) | Live model `pp-2a202603176` trong CVAT (`#35`); [lambda_match_report.json](d14_2A202603176/bonus_nuclio_pp/lambda_match_report.json): **63/63 (`100%`)** khớp `<= 0.5 m`. |
+| Bonus Hướng 2 (Nuclio) | [bonus_nuclio_pp](d14_2A202603176/bonus_nuclio_pp/README.md) | Live model `pp-2a202603176` trong CVAT (`#35`); [lambda_match_report.json](d14_2A202603176/bonus_nuclio_pp/lambda_match_report.json): **63/63 (`100%`)** khớp `<= 0.5 m`; còn thiếu video ngắn. |
 | Bonus Hướng 1 (Helper) | [bonus_telemetry](d14_2A202603176/bonus_telemetry/README.md) | Helper sẵn sàng cho phiên bấm chuột trình duyệt; không tạo log telemetry giả. |
 
 ## Kết quả định lượng cuối
@@ -32,7 +32,7 @@
 ## Việc còn lại thuộc phía người học
 
 1. **5b lịch sử (`053e299`):** gửi giải thích trung thực cho coach dựa trên [COACH_NOTE_DRAFT.md](d14_2A202603176/COACH_NOTE_DRAFT.md).
-2. **Xác nhận cuối trên CVAT (nếu cần) & quay/chụp Bonus:** task `#32`, `#33` và model Nuclio `pp-2a202603176` + task `#35` đang chạy trên CVAT `http://localhost:8080`.
+2. **Xác nhận cuối của người học trên CVAT & video Bonus:** mở rà nhanh task `#32`, `#33` (trong đó đã bật `occluded=true` cho `12/31` hộp A và `46/161` hộp B bị che khuất) và quay video ngắn tab **Models** / task `#35` của `pp-2a202603176` nếu muốn đủ điều kiện `+3` điểm Bonus Hướng 2.
 3. **Nộp LMS:** lấy **URL commit có mã SHA đầy đủ** mới nhất sau khi push lên GitHub và nộp lên LMS trước **12:00 trưa**.
 
 ## Bằng chứng kiểm tra và tái lập
