@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "scope": "Current staged changes, not an exhaustive audit of past history.",
-  "staged_file_count": 9,
+  "staged_file_count": 16,
   "required_artifacts_present": true,
   "no_DataVF_third_party_venv_zip_env_or_camera_images": true,
   "no_raw_session_seed_or_recognized_token_patterns": true,

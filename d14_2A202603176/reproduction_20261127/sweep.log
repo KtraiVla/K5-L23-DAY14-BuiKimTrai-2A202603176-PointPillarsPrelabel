@@ -1,0 +1,34 @@
+15 cấu hình × 3 frame
+  {'score_thr': '0.1', 'min_points': '0'}  → chi phí 16.2
+  {'score_thr': '0.1', 'min_points': '5'}  → chi phí 15.9
+  {'score_thr': '0.1', 'min_points': '10'}  → chi phí 15.0
+  {'score_thr': '0.2', 'min_points': '0'}  → chi phí 14.7
+  {'score_thr': '0.2', 'min_points': '5'}  → chi phí 14.4
+  {'score_thr': '0.2', 'min_points': '10'}  → chi phí 13.8
+  {'score_thr': '0.3', 'min_points': '0'}  → chi phí 10.5
+  {'score_thr': '0.3', 'min_points': '5'}  → chi phí 10.2
+  {'score_thr': '0.3', 'min_points': '10'}  → chi phí 9.9
+  {'score_thr': '0.4', 'min_points': '0'}  → chi phí 6.3
+  {'score_thr': '0.4', 'min_points': '5'}  → chi phí 6.3
+  {'score_thr': '0.4', 'min_points': '10'}  → chi phí 6.3
+  {'score_thr': '0.5', 'min_points': '0'}  → chi phí 12.8
+  {'score_thr': '0.5', 'min_points': '5'}  → chi phí 12.8
+  {'score_thr': '0.5', 'min_points': '10'}  → chi phí 12.8
+
+Top 10 (ghi đủ ở out\final_audit_20261127\sweep_reproduced.csv):
+     6.30  xóa  11 thêm   3 sửa   0  {'score_thr': '0.4', 'min_points': '0'}
+     6.30  xóa  11 thêm   3 sửa   0  {'score_thr': '0.4', 'min_points': '5'}
+     6.30  xóa  11 thêm   3 sửa   0  {'score_thr': '0.4', 'min_points': '10'}
+     9.90  xóa  23 thêm   3 sửa   0  {'score_thr': '0.3', 'min_points': '10'}
+    10.20  xóa  24 thêm   3 sửa   0  {'score_thr': '0.3', 'min_points': '5'}
+    10.50  xóa  25 thêm   3 sửa   0  {'score_thr': '0.3', 'min_points': '0'}
+    12.80  xóa   6 thêm  11 sửa   0  {'score_thr': '0.5', 'min_points': '0'}
+    12.80  xóa   6 thêm  11 sửa   0  {'score_thr': '0.5', 'min_points': '5'}
+    12.80  xóa   6 thêm  11 sửa   0  {'score_thr': '0.5', 'min_points': '10'}
+    13.80  xóa  36 thêm   3 sửa   0  {'score_thr': '0.2', 'min_points': '10'}
+Cấu hình tốt nhất → out\final_audit_20261127\sweep_first_winner.json
+
+Leave-one-out (chọn trên các frame còn lại, chấm trên frame bỏ ra):
+  s01f18: cấu hình chọn {'score_thr': '0.4', 'min_points': '0'} → 2.5 (tốt nhất có thể 2.5)
+  s03f31: cấu hình chọn {'score_thr': '0.4', 'min_points': '0'} → 2.2 (tốt nhất có thể 2.2)
+  s04f28: cấu hình chọn {'score_thr': '0.4', 'min_points': '0'} → 1.6 (tốt nhất có thể 1.6)

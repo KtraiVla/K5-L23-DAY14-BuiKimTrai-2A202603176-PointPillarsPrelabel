@@ -12,7 +12,7 @@
 
 Không bổ sung một dự đoán rồi trình bày như đã viết trước sweep, không đổi thời gian và không viết lại lịch sử Git. Tiêu chí 5b chưa hoàn thành; việc chấp nhận thiếu sót này thuộc quyết định của coach.
 
-Đã chuẩn bị [bản nháp giải thích gửi coach](../../d14_2A202603176/COACH_NOTE_DRAFT.md), nhưng chưa gửi và chưa có quyết định của coach.
+Đã chuẩn bị [bản nháp giải thích gửi coach](../../d14_2A202603176/COACH_NOTE_DRAFT.md). Chưa có xác nhận đã gửi hoặc phản hồi của coach được cung cấp cho vòng rà soát này.
 
 ## 2. Tập A: sửa tay và tune
 
@@ -29,12 +29,12 @@ Chỉ hai tham số trên thay đổi so với cấu hình gốc. Các tham số
 
 Sweep bắt buộc gồm 15 cấu hình: `score_thr=0.1,0.2,0.3,0.4,0.5` kết hợp `min_points=0,5,10`, lưu ở [sweep.csv](../../d14_2A202603176/sweep.csv). Tại `score_thr=0.4`, cả ba giá trị `min_points` đồng hạng chi phí 6.3 trên A. Script chọn hàng đầu là `min_points=0`. Cấu hình cuối dùng `min_points=5`, một phương án đồng hạng đã được sử dụng khi tạo task CVAT trước đó; dữ liệu A không chứng minh giá trị 5 tốt hơn 0 hoặc 10.
 
-Leave-one-out dưới đây được tái dựng từ các cột chi phí từng frame trong `sweep.csv`, dùng quy tắc chọn hàng đầu khi bằng điểm. Đây không phải bản chép lại đầu ra terminal nguyên gốc:
+Rà soát ngày 27/11/2026 đã chạy lại sweep từ Data-VF và `ref_A.json`; mọi dòng trong 15 cấu hình khớp file đã lưu. Leave-one-out dưới đây là đầu ra của lần tái lập này, lưu ở [log sweep](../../d14_2A202603176/reproduction_20261127/sweep.log); không phải bằng chứng được ghi trước sweep:
 
 ```text
-s01f18: selected {'score_thr': 0.4, 'min_points': 0} -> 2.5 (best possible 2.5)
-s03f31: selected {'score_thr': 0.4, 'min_points': 0} -> 2.2 (best possible 2.2)
-s04f28: selected {'score_thr': 0.4, 'min_points': 0} -> 1.6 (best possible 1.6)
+s01f18: cấu hình chọn {'score_thr': '0.4', 'min_points': '0'} → 2.5 (tốt nhất có thể 2.5)
+s03f31: cấu hình chọn {'score_thr': '0.4', 'min_points': '0'} → 2.2 (tốt nhất có thể 2.2)
+s04f28: cấu hình chọn {'score_thr': '0.4', 'min_points': '0'} → 1.6 (tốt nhất có thể 1.6)
 ```
 
 | Frame A | Chi phí gốc | Chi phí cấu hình cuối |
@@ -116,3 +116,5 @@ AI hỗ trợ chuẩn bị môi trường, chạy lệnh, xuất/đổi định 
 Ngoài pre-label của lab, AI đã dùng phép chiếu camera và mặt cắt LiDAR để chuẩn bị bản nhãn đề xuất riêng trên task #34 như mô tả ở mục 4. Các thay đổi này được khai báo là AI hỗ trợ, chưa phải nhãn người học đã xác nhận.
 
 Kết quả tự kiểm được lưu tại [FINAL_REVIEW.md](../../d14_2A202603176/FINAL_REVIEW.md) và [validation_summary.json](../../d14_2A202603176/validation_summary.json). Kiểm tra cấu trúc đạt không thay thế việc coach chấm chất lượng nhãn và lịch sử 5b.
+
+Lần rà soát 27/11 đã tái tạo khớp hoàn toàn `pred_A.json`, `pred_B.json`, cả 15 dòng sweep và từng byte của 3 ảnh compare. Có 55 kiểm tra tự động đạt, gồm 49 unittest có sẵn, 2 kiểm tra telemetry dạng hàm và 4 kiểm tra chống thiếu/trùng dòng trong checklist. Chi tiết phạm vi và giới hạn nằm trong [kết quả rà soát](../../d14_2A202603176/full_review_20261127.json).

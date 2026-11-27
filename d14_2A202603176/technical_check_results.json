@@ -2,6 +2,8 @@
   "technical_checks": "PASS",
   "student": "2A202603176",
   "seed_tag": "393590736f",
+  "submission_readiness": "NOT_CERTIFIED",
+  "scope": "Technical consistency only. A PASS does not certify annotation quality, historical 5b evidence or LMS submission.",
   "metrics": {
     "A_default": {
       "gt": 41,

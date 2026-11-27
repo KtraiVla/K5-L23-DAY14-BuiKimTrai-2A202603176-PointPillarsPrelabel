@@ -17,7 +17,7 @@ parser.add_argument('--data',type=Path,required=True)
 parser.add_argument('--out',type=Path,default=run/'png_review_live_ids')
 args=parser.parse_args()
 out=args.out
-out.mkdir(exist_ok=True)
+out.mkdir(parents=True,exist_ok=True)
 data=args.data
 with (run/'review_checklist.csv').open(encoding='utf-8-sig',newline='') as handle:
     rows=list(csv.DictReader(handle))

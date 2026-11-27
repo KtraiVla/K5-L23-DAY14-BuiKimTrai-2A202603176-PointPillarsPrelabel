@@ -1,0 +1,220 @@
+{
+  "review_date_local": "2026-11-27",
+  "timezone": "Asia/Saigon",
+  "reviewed_remote_base_commit": "9b77afeedc67466fb0172a3170810144e7b28c3a",
+  "technical_checks": "PASS",
+  "submission_readiness": "INCOMPLETE",
+  "rubric_grade_not_assigned": true,
+  "official_coach_checker_run": false,
+  "file_inventory": {
+    "scope": "Tracked plus non-ignored new audit files, excluding this generated summary itself",
+    "extensions": {
+      "(no extension)": 4,
+      ".md": 17,
+      ".html": 2,
+      ".pdf": 1,
+      ".js": 1,
+      ".py": 29,
+      ".json": 24,
+      ".jpg": 8,
+      ".txt": 5,
+      ".log": 7,
+      ".csv": 5,
+      ".docx": 1,
+      ".png": 11
+    },
+    "python_AST_parsed": 29,
+    "JSON_parsed": 24,
+    "CSV_rectangular_tables": 5,
+    "images_decoded_and_verified": 19,
+    "broken_local_Markdown_links": []
+  },
+  "tests": {
+    "review_date_local": "2026-11-27",
+    "timezone": "Asia/Saigon",
+    "groups": [
+      {
+        "runner": "python -X utf8 -B -m unittest discover -s tests -v",
+        "scope": "49 pre-existing unittest tests, run before adding the checklist regression module",
+        "count": 49,
+        "status": "PASS"
+      },
+      {
+        "runner": "Direct invocation of the two existing test functions in tests/test_telemetry_metrics.py; Path supplied from TemporaryDirectory",
+        "scope": "test_session_metrics_counts_and_gaps and test_cli_writes_csv; function-style tests are not collected by unittest",
+        "count": 2,
+        "status": "PASS"
+      },
+      {
+        "runner": "python -X utf8 -B -m unittest discover -s tests -p test_submission_audit.py -v",
+        "scope": "Valid coverage, duplicate/missing rows, zero one-based index, missing warning entry",
+        "count": 4,
+        "status": "PASS"
+      }
+    ],
+    "total_distinct_checks": 55,
+    "total_tests": 55,
+    "all_passed": true,
+    "annotation_quality_verified": false,
+    "scope": "Regression and data-consistency checks, not the coach checker or a grade of all cuboids."
+  },
+  "fresh_inference": {
+    "A": {
+      "exact_document_match": true,
+      "frames": 3,
+      "boxes": 82
+    },
+    "B": {
+      "exact_document_match": true,
+      "frames": 12,
+      "boxes": 243
+    }
+  },
+  "sweep": {
+    "all_15_rows_match_fresh_run": true,
+    "original_first_winner": {
+      "voxel_size": 0.16,
+      "intensity_mode": "clip",
+      "intensity_scale": 1.0,
+      "ground_mode": "fixed",
+      "delta_z": 0.0,
+      "passes": 4,
+      "score_thr": 0.4,
+      "thr_car": null,
+      "thr_cyc": null,
+      "thr_ped": null,
+      "nms_thr": 0.01,
+      "nms_pre": 100,
+      "max_num": 50,
+      "range_m": 50.0,
+      "min_points": 0,
+      "merge_nms_thr": 0.1,
+      "size_pad_m": 0.1,
+      "truck_l_min": 5.6,
+      "truck_h_min": 2.4,
+      "bus_l_min": 9.0,
+      "bus_h_min": 2.8,
+      "extra": {}
+    },
+    "selected_config": {
+      "voxel_size": 0.16,
+      "intensity_mode": "clip",
+      "intensity_scale": 1.0,
+      "ground_mode": "fixed",
+      "delta_z": 0.0,
+      "passes": 4,
+      "score_thr": 0.4,
+      "thr_car": null,
+      "thr_cyc": null,
+      "thr_ped": null,
+      "nms_thr": 0.01,
+      "nms_pre": 100,
+      "max_num": 50,
+      "range_m": 50.0,
+      "min_points": 5,
+      "merge_nms_thr": 0.1,
+      "size_pad_m": 0.1,
+      "truck_l_min": 5.6,
+      "truck_h_min": 2.4,
+      "bus_l_min": 9.0,
+      "bus_h_min": 2.8,
+      "extra": {}
+    },
+    "tie_explained_in_report": true
+  },
+  "comparison_images": {
+    "count": 3,
+    "all_byte_identical_to_fresh_model_rendering": true
+  },
+  "current_metrics": {
+    "A_default": {
+      "gt": 41,
+      "pred": 82,
+      "match": 38,
+      "delete": 44,
+      "add": 3,
+      "edit": 0,
+      "cost": 16.2
+    },
+    "A_tuned": {
+      "gt": 41,
+      "pred": 49,
+      "match": 38,
+      "delete": 11,
+      "add": 3,
+      "edit": 0,
+      "cost": 6.3
+    },
+    "B_tuned": {
+      "gt": 242,
+      "pred": 243,
+      "match": 240,
+      "delete": 3,
+      "add": 2,
+      "edit": 0,
+      "cost": 2.9
+    }
+  },
+  "historical_5b": {
+    "commit": "053e29949860394539643056ae41a1ad0f36d7a0",
+    "prediction_content": "TEMPLATE_ONLY",
+    "status": "MISSING",
+    "coach_note_status": "DRAFT_NOT_SENT",
+    "history_rewritten": false
+  },
+  "CVAT_read_only_observation": {
+    "observed_on_local_date": "2026-11-27",
+    "timezone": "Asia/Saigon",
+    "tasks": {
+      "32": {
+        "frame_count": 3,
+        "job_updated_UI": "Nov 26th 2026 19:14",
+        "state_UI": "in progress"
+      },
+      "33": {
+        "frame_count": 12,
+        "job_updated_UI": "Nov 26th 2026 21:57",
+        "state_UI": "in progress"
+      },
+      "34": {
+        "frame_count": 12,
+        "job_updated_UI": "Nov 26th 2026 23:15",
+        "state_UI": "new",
+        "kind": "AI proposal, not promoted to submission reference"
+      }
+    },
+    "does_not_prove_human_review": true
+  },
+  "remaining_requirements": [
+    "Valid historical 5b content is absent; needs coach decision.",
+    "Human annotation QA and saved corrected references; proposal #34 has provisional Truck length.",
+    "Submit the final pushed commit SHA on LMS; submission not verified."
+  ],
+  "security": {
+    "scope": "Current tracked/new non-ignored files; not a full history secret audit",
+    "raw_session_seed_or_recognized_token_patterns_found": false,
+    "forbidden_DataVF_venv_third_party_env_paths_found": false
+  },
+  "environment": {
+    "python": "3.13.15",
+    "torch": "2.15.0+cpu",
+    "numpy": "2.5.2",
+    "Pillow": "12.3.0",
+    "cvat-sdk": "2.83.0"
+  },
+  "checkpoint_sha256": "482dfcf63b932cc5ccf012b4bbdad52aa51aa33becf87d0a39d61c39b377b5b1",
+  "required_numeric_and_image_artifact_sha256": {
+    "frames_A.txt": "02d2cebe53b00dce7d5711dca17a0d02fbac8baf6cbc42745c852183c3a80755",
+    "frames_B.txt": "25a161a18f44a87b88828d659e1453f3a360ed346dcb8d3b5c0e326ce7518517",
+    "pred_A.json": "57aaf60058ceaf637626221607afebb3b52e4d72efbc8d53e1542afa92bf58cc",
+    "ref_A.json": "c47dfab1583bb9b052305eafe6c07f3c5c8c61171182f20205c935ab0637d6ae",
+    "sweep.csv": "69a5690838612c8352e64449621d76497242c233a6299da5227f38e144ef7016",
+    "best_config.json": "402bb3b6d90253a48b4b98ab636c17eb694722205be8b632472c03ae1e3f9154",
+    "pred_B.json": "a132edac0d4ef4c9d801a97dc160137fb576546829d9274afb1823e15558f481",
+    "ref_B.json": "8a1de40e23f397dfd47530d2a583c4aaf6ffd8a93135ff45968fd1072eaa7a6d",
+    "compare/s01f18.jpg": "35bfb96113afb3b3aa9e1f826c20bd7298796460d2415f24915b8d0b1bed5bb7",
+    "compare/s03f31.jpg": "1e7e6c3fd7a49f6bec4621999d59f4c8ce792b8c1ddd97306648d3fcc6acaec7",
+    "compare/s04f28.jpg": "9fc65cf9f6ffc635c407b51098a6b383b230b66d1404e0d07057285b564e1ea6"
+  },
+  "limits": "Technical reproduction and schema checks do not grade whether all real objects have correct cuboids. No human-review status, historical prediction or LMS submission is fabricated."
+}

@@ -1,6 +1,8 @@
 # Tự rà soát Lab14 — 2A202603176
 
-**Bộ file kỹ thuật đã được chuẩn bị; chưa đủ căn cứ xác nhận toàn bộ bài đạt yêu cầu.** Hai phần chính còn thiếu là dự đoán 5b có nội dung trước sweep và vòng kiểm nhãn của người học sau các phát hiện QA. Người học đã cung cấp nhận xét về xe bus bị sót; nhận xét đã được đưa vào mục 3 báo cáo với đúng thời điểm sau thực nghiệm. Chưa nộp LMS.
+**Bộ file kỹ thuật đã được chuẩn bị; chưa đủ căn cứ xác nhận toàn bộ bài đạt yêu cầu.** Hai phần chính còn thiếu là dự đoán 5b có nội dung trước sweep và vòng kiểm nhãn của người học sau các phát hiện QA. Người học đã cung cấp nhận xét về xe bus bị sót; nhận xét đã được đưa vào mục 3 báo cáo với đúng thời điểm sau thực nghiệm. Chưa xác minh việc nộp LMS.
+
+**Cập nhật rà soát 27/11/2026:** dự đoán A/B tái tạo khớp hoàn toàn, đủ 15 dòng sweep khớp và cả 3 ảnh compare khớp từng byte. Đã có 55 kiểm tra tự động đạt. Bản máy đọc ở [full_review_20261127.json](full_review_20261127.json), log tái lập ở [reproduction_20261127](reproduction_20261127/README.md). `technical_checks: PASS` chỉ xác nhận tính nhất quán kỹ thuật; trạng thái toàn bài vẫn là `INCOMPLETE`.
 
 ## Đối chiếu yêu cầu
 
@@ -13,9 +15,9 @@
 | Giữ pre-label gốc A | ĐẠT | `pred_A.json`: 82 hộp, cấu hình mặc định; bản lọc riêng 49 hộp. |
 | Nhãn tham chiếu A | ĐẠT cấu trúc, CHỜ chất lượng | 41 hộp, 3 Bus bổ sung; không phải chỉ xóa hộp. Nguồn task #32 đã lưu, không có Track. Cần kiểm lại các vị trí trong `VISUAL_REVIEW.md`. |
 | Dự đoán trước sweep 5b | CHƯA ĐẠT | Commit `053e29949860394539643056ae41a1ad0f36d7a0` chỉ có template; thiếu nội dung dự đoán thật. Không tạo lại hoặc backdate. |
-| Sweep và lựa chọn cấu hình | ĐẠT dữ liệu kỹ thuật | Đủ 15 tổ hợp; `.4/5` đồng hạng tốt nhất trên A. Có giải thích tie và leave-one-out tái dựng từ CSV. |
+| Sweep và lựa chọn cấu hình | ĐẠT dữ liệu kỹ thuật | Đủ 15 tổ hợp; `.4/5` đồng hạng tốt nhất trên A. Đã chạy lại sweep, có stdout leave-one-out và giải thích tie trong báo cáo. |
 | Compare và số đo A | ĐẠT | Đủ 3 JPG mở được; chi phí 16.2 → 6.3, giảm 61.11%; ảnh được liên kết trong báo cáo. |
-| Nhận xét cá nhân / đối chiếu với 5b | ĐÃ CÓ nhận xét; 5b CÒN THIẾU | Người học nhận thấy tập A bỏ sót một vài vật thể như xe bus; AI chỉ sửa câu chữ. Thiếu dự đoán gốc nên không thể kết luận dự đoán 5b đúng/sai. Có bản nháp giải thích gửi coach, chưa gửi. |
+| Nhận xét cá nhân / đối chiếu với 5b | ĐÃ CÓ nhận xét; 5b CÒN THIẾU | Người học nhận thấy tập A bỏ sót một vài vật thể như xe bus; AI chỉ sửa câu chữ. Thiếu dự đoán gốc nên không thể kết luận dự đoán 5b đúng/sai. Có bản nháp giải thích cho coach; chưa có xác nhận gửi hoặc phản hồi được cung cấp. |
 | Pre-label B theo cấu hình cuối | ĐẠT file; có lệch trình tự | 243 hộp, metadata khớp cấu hình cuối. Task #33 dùng preset này trước khi hoàn tất sweep; đã công bố rõ trong báo cáo. |
 | `ref_B.json` đủ 12 frame | ĐẠT cấu trúc | 242 hộp; có thay đổi thực so với model, không trùng toàn bộ. Nguồn backup task #33 đã lưu, không có Track. |
 | Mọi nhãn B đã đúng | CHƯA XÁC NHẬN | 10/12 frame không đổi hình học/lớp so với preview. Xem đủ 15 ảnh tổng hợp đã phát hiện các vị trí cần kiểm người; chi phí thấp không xác nhận nhãn đúng. |
@@ -23,7 +25,7 @@
 | Báo cáo đúng template | CÓ 5 MỤC; 5b CÒN THIẾU | Đủ số đo, ảnh, LOO, giới hạn, nhận xét do người học cung cấp và khai báo hỗ trợ AI. Mục 1/3 ghi rõ thiếu bằng chứng 5b thay vì giả nội dung. |
 | Repo đúng tên và coach mở được | ĐẠT | Repo public `K5-L23-DAY14-BuiKimTrai-2A202603176-PointPillarsPrelabel`; giữ nguyên lịch sử Git. |
 | Dữ liệu và bí mật không đi vào bài nộp | ĐẠT kiểm tra stage | `staged_file_audit.json`: không có Data-VF, third_party, venv, ZIP, .env, ảnh camera/QA, SEED nguyên văn hoặc token theo mẫu đã kiểm. Đây là kiểm tra các thay đổi đang nộp, không phải kiểm toán toàn bộ lịch sử. |
-| Link commit có SHA đã nộp LMS | CHƯA NỘP | Người học dùng đúng SHA đã push; repo có file không đồng nghĩa đã nộp LMS. |
+| Link commit có SHA đã nộp LMS | CHƯA XÁC MINH | Người học dùng đúng SHA đã push; repo có file không đồng nghĩa đã nộp LMS. Chưa có xác nhận từ trang bài nộp. |
 | Điểm cộng | KHÔNG THỰC HIỆN | Tùy chọn; không bịa log đo thao tác hay tích hợp CVAT. |
 
 ## Đối chiếu rubric
@@ -39,12 +41,14 @@ Không tự cho điểm thay coach và không khẳng định đạt 100/100.
 ## Kiểm chứng đã chạy
 
 - Kiểm tra nội bộ `verify_submission.py`: PASS cho bộ file hiện tại; đúng MSSV/SEED, frame, cấu hình, số đo và liên kết.
-- Unit test có sẵn `test_cvat_cuboid.py`: 12/12 PASS, kiểm phép chuyển cuboid CVAT.
-- Unit test có sẵn `test_scoring_range.py`: 10/10 PASS, kiểm phạm vi và cách tính công sửa.
-- Unit test có sẵn `test_json_bom.py`: 1/1 PASS, kiểm đọc JSON BOM.
-- Tổng 23 test trên đều PASS. Không dùng kết quả này để suy ra 283 hộp tham chiếu đều đúng.
+- Toàn bộ 49 unittest có sẵn của repo: PASS, gồm CLI, cuboid CVAT, detector, phạm vi chấm, JSON BOM, setup, tài liệu và encoding Windows.
+- Hai test telemetry dạng hàm có sẵn: PASS khi gọi trực tiếp; `unittest discover` không tự thu thập hai hàm này.
+- Bốn test mới về checklist: PASS; bắt trùng dòng làm thiếu hộp dù tổng số dòng không đổi, chỉ số reference bằng 0 và bảng cảnh báo thiếu dòng.
+- Tổng cộng **55 kiểm tra khác nhau** đạt. 23 test được báo ở lần trước là tập con, không cộng lại. Không dùng số test này để suy ra 283 hộp tham chiếu đều đúng.
+- Đã tái chạy inference A mặc định, B cấu hình cuối, đủ grid A và compare bằng script gốc; mọi kết quả bắt buộc khớp file đã lưu.
 - Giữ nguyên byte của hai file frame do script sinh trên Windows bằng `.gitattributes`; không để Git tự chuyển CRLF thành LF trong bài nộp. Nội dung frame không sửa tay.
 - Kiểm tra tiếp theo: checklist 283 hộp khớp từng lớp, XYZ, kích thước và yaw với tham chiếu; SHA256 tham chiếu khớp snapshot đọc sidebar CVAT. Bảng 62 cảnh báo vẫn để `PENDING_HUMAN_REVIEW`.
+- Đã kiểm lại trạng thái CVAT ngày 27/11: job #32 cập nhật cuối 26/11 lúc 19:14, #33 lúc 21:57, #34 lúc 23:15; #34 vẫn hiển thị `new`. Thông tin trạng thái không tự chứng minh đã hoặc chưa xem mọi hộp, nhưng chưa có bằng chứng vòng xác nhận nhãn đề xuất đã hoàn tất.
 
 ## Chạy lại kiểm tra kỹ thuật
 

@@ -1,0 +1,15 @@
+frame     box  lớp
+s01f02     24  {'Car': 21, 'Cyclist': 2, 'Pedestrian': 1}  cảnh báo kích thước=0  3.2s  | xóa 2 thêm 1 sửa 0 → chi phí 1.6
+s01f27     20  {'Car': 17, 'Cyclist': 3}  cảnh báo kích thước=0  3.3s  | xóa 1 thêm 1 sửa 0 → chi phí 1.3
+s01f48     27  {'Car': 16, 'Cyclist': 10, 'Pedestrian': 1}  cảnh báo kích thước=2  3.2s  | xóa 0 thêm 0 sửa 0 → chi phí 0.0
+s02f11     20  {'Car': 17, 'Cyclist': 2, 'Pedestrian': 1}  cảnh báo kích thước=1  2.9s  | xóa 0 thêm 0 sửa 0 → chi phí 0.0
+s02f29     15  {'Car': 13, 'Cyclist': 2}  cảnh báo kích thước=0  2.8s  | xóa 0 thêm 0 sửa 0 → chi phí 0.0
+s02f54     21  {'Car': 15, 'Cyclist': 6}  cảnh báo kích thước=0  2.9s  | xóa 0 thêm 0 sửa 0 → chi phí 0.0
+s03f08     20  {'Car': 18, 'Cyclist': 2}  cảnh báo kích thước=0  2.5s  | xóa 0 thêm 0 sửa 0 → chi phí 0.0
+s03f24     12  {'Car': 9, 'Cyclist': 3}  cảnh báo kích thước=0  2.6s  | xóa 0 thêm 0 sửa 0 → chi phí 0.0
+s03f57     19  {'Car': 13, 'Cyclist': 6}  cảnh báo kích thước=0  2.9s  | xóa 0 thêm 0 sửa 0 → chi phí 0.0
+s05f01     28  {'Car': 21, 'Cyclist': 7}  cảnh báo kích thước=0  2.8s  | xóa 0 thêm 0 sửa 0 → chi phí 0.0
+s05f24     23  {'Car': 20, 'Cyclist': 3}  cảnh báo kích thước=0  2.9s  | xóa 0 thêm 0 sửa 0 → chi phí 0.0
+s05f45     14  {'Car': 13, 'Cyclist': 1}  cảnh báo kích thước=0  2.7s  | xóa 0 thêm 0 sửa 0 → chi phí 0.0
+TỔNG (12 frame có nhãn): GT 242, dự đoán 243, khớp 240, xóa 3, thêm 2, sửa 0 → chi phí 2.9
+Đã ghi out/final_audit_20261127/pred_B_reproduced.json

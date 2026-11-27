@@ -48,6 +48,46 @@ def geometry(boxes):
                                + (box['label'],) for box in boxes)
 
 
+def validate_review_tables(checklist, qa_rows, warning_rows, references, snapshot):
+    """Require exact box coverage, not just the same number of CSV rows."""
+    expected = {(part, frame, index): box
+                for part, frames in references.items()
+                for frame, boxes in frames.items()
+                for index, box in enumerate(boxes, 1)}
+
+    def indexed(rows, index_field, label):
+        result = {}
+        for row in rows:
+            key = (row['part'], row['frame'], int(row[index_field]))
+            require(key in expected, f'{label}: unknown box or invalid one-based index: {key}')
+            require(key not in result, f'{label}: duplicate box: {key}')
+            result[key] = row
+        return result
+
+    checks = indexed(checklist, 'reference_idx', 'Review checklist')
+    qa = indexed(qa_rows, 'idx', 'Point-cloud QA')
+    warnings = indexed(warning_rows, 'reference_idx', 'Warning checklist')
+    require(set(checks) == set(expected), 'Review checklist is missing reference boxes.')
+    require(set(qa) == set(expected), 'Point-cloud QA is missing reference boxes.')
+    require(set(warnings) == {key for key, row in qa.items() if row['flags']},
+            'Warning checklist is missing boxes or contains non-warning boxes.')
+    for key, box in expected.items():
+        part, frame, index = key
+        row = checks[key]
+        require(row['label'] == qa[key]['label'] == box['label'], 'Review/QA class differs from reference.')
+        require(all(abs(float(row[field]) - box[field]) < 1e-8
+                    for field in ('x', 'y', 'z', 'length', 'width', 'height', 'yaw')),
+                'Review checklist geometry differs from reference.')
+        mapping = snapshot['frame_mapping'][part][frame]
+        require(int(row['cvat_frame']) == mapping['frame_index']
+                and int(row['cvat_object_id']) == mapping['first_object_id'] + index - 1,
+                'Review checklist object/frame ID differs from its recorded CVAT snapshot.')
+        for field in ('dist_m', 'points_in', 'ground_gap_m', 'flags'):
+            require(row[field] == qa[key][field], f'Review checklist has stale QA field: {field}')
+        if key in warnings:
+            require(warnings[key] == row, 'Warning checklist row differs from full checklist.')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--data', type=Path, required=True)
@@ -121,11 +161,10 @@ def main():
             require(snapshot['references_sha256'][part] == current_hash, 'Live-review snapshot is stale; rebuild before using its object IDs.')
         with (run / 'review_checklist.csv').open(encoding='utf-8-sig', newline='') as handle:
             checklist = list(csv.DictReader(handle))
-        require(len(checklist) == refs, 'Review checklist count differs.')
-        for row in checklist:
-            box = docs[f"ref_{row['part']}"]['frames'][row['frame']][int(row['reference_idx']) - 1]
-            require(row['label'] == box['label'] and all(abs(float(row[key]) - box[key]) < 1e-8
-                    for key in ('x', 'y', 'z', 'length', 'width', 'height', 'yaw')), 'Review checklist differs from reference.')
+        with (run / 'review_warnings_62.csv').open(encoding='utf-8-sig', newline='') as handle:
+            warning_rows = list(csv.DictReader(handle))
+        validate_review_tables(checklist, qa_rows, warning_rows,
+                               {part: docs[f'ref_{part}']['frames'] for part in frames}, snapshot)
     for name in frames['A']:
         with Image.open(run / 'compare' / f'{name}.jpg') as picture:
             picture.verify()
@@ -154,6 +193,8 @@ def main():
         require(sum(map(len, proposal['frames'].values())) == journal['proposed_boxes'] == observed['total_boxes'], 'QA proposal totals differ.')
         require(journal['original_boxes'] - journal['proposed_boxes'] == sum(action['action'] == 'propose_delete' for action in journal['actions']), 'QA proposal deletion journal differs.')
     print(json.dumps({'technical_checks': 'PASS', 'student': student, 'seed_tag': tag,
+                      'submission_readiness': 'NOT_CERTIFIED',
+                      'scope': 'Technical consistency only. A PASS does not certify annotation quality, historical 5b evidence or LMS submission.',
                       'metrics': {name: value['total'] for name, value in results.items()},
                       'frame_list_sha256': {part: hashlib.sha256((run / f'frames_{part}.txt').read_bytes()).hexdigest() for part in frames},
                       'not_validated': ['historical 5b prediction', 'human quality of every annotation', 'LMS submission'],
