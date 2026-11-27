@@ -1,24 +1,22 @@
 # Báo cáo Day 14 — Bui Kim Trai — 2A202603176
 
-- Mã học viên rút gọn (3 số cuối): `176` (bộ frame `d14_2A202603176/frames_A.txt`, `frames_B.txt` được sinh thực tế bằng `--student 2A202603176`).
+- Mã học viên rút gọn (3 số cuối): `176` (bộ frame [frames_A.txt](../../d14_2A202603176/frames_A.txt), [frames_B.txt](../../d14_2A202603176/frames_B.txt) được sinh thực tế bằng `--student 2A202603176`).
 - `seed_tag`: `393590736f`; SEED không được lưu trong bài nộp.
 - Tập A (3 frame): `s01f18`, `s03f31`, `s04f28`.
 - Tập B (12 frame): `s01f02`, `s01f27`, `s01f48`, `s02f11`, `s02f29`, `s02f54`, `s03f08`, `s03f24`, `s03f57`, `s05f01`, `s05f24`, `s05f45`.
-- Nguồn nhãn: xuất trực tiếp từ CVAT cá nhân (task `#32` `D14-2A202603176-A` và task `#33` `D14-2A202603176-B`) bằng `scripts/vf_cvat.py reference` sau khi người học cùng AI rà soát và tinh chỉnh hình học trên 7 camera và LiDAR; các file tham chiếu trước đó được lưu bản sao ở cục bộ trong quá trình kiểm tra.
+- Nguồn nhãn: xuất trực tiếp từ CVAT cá nhân (task `#32` `D14-2A202603176-A` và task `#33` `D14-2A202603176-B`) bằng `scripts/vf_cvat.py reference`.
 
 ## 1. Dự đoán trước sweep (bước 5b)
 
 **Thiếu bằng chứng dự đoán trước sweep.** Commit `053e29949860394539643056ae41a1ad0f36d7a0` có tiêu đề `5b: du doan truoc sweep`, nhưng nội dung báo cáo tại commit này chỉ là template (hai dòng dự đoán vẫn là dấu ba chấm). Tiêu đề commit không chứng minh đã viết nội dung dự đoán.
 
-Không bổ sung một dự đoán rồi trình bày như đã viết trước sweep, không đổi thời gian và không viết lại lịch sử Git. Tiêu chí 5b chưa hoàn thành; việc xem xét thiếu sót này thuộc quyết định của coach. Đã chuẩn bị [bản nháp giải thích gửi coach](../../d14_2A202603176/COACH_NOTE_DRAFT.md).
+Không bổ sung dự đoán rồi trình bày như đã viết trước sweep, không đổi thời gian và không viết lại lịch sử Git. Tiêu chí 5b chưa hoàn thành; việc xem xét thiếu sót này thuộc quyết định của coach. Đã chuẩn bị [bản nháp giải thích gửi coach](../../d14_2A202603176/COACH_NOTE_DRAFT.md).
 
 ## 2. Tập A: sửa tay và tune
 
-`pred_A.json` giữ nguyên dự đoán gốc cấu hình mặc định (`score_thr=0.1`, `min_points=0`): 82 hộp (`59 Car`, `4 Pedestrian`, `19 Cyclist`).
+[pred_A.json](../../d14_2A202603176/pred_A.json) giữ nguyên dự đoán gốc cấu hình mặc định (`score_thr=0.1`, `min_points=0`): `82` hộp (`59 Car`, `4 Pedestrian`, `19 Cyclist`).
 
-`ref_A.json` sau vòng làm sạch và chuẩn hóa nhãn gồm **31 hộp** trên 3 frame (`s01f18`: 10, `s03f31`: 5, `s04f28`: 16), phân bố lớp: `25 Car`, `3 Bus`, `2 Cyclist`, `1 Pedestrian`. Cụ thể, so với vòng nhãn thô ban đầu (41 hộp), vòng rà soát 7 camera và mặt cắt LiDAR đã loại bỏ các hộp thừa đặt trên cây/bồn hoa/biển báo/xe hai bánh không có người điều khiển, chỉnh sát kích thước/yaw (nhất là 3 xe `Bus`) và bổ sung các xe thật bị sót trong phạm vi 50 m. Task CVAT `#32` dùng toàn bộ dạng **Shape** (`0` Track).
-
-Bản dự đoán đã lọc theo cấu hình thắng cuộc được xuất trong [pred_A_filtered.json](../../d14_2A202603176/pred_A_filtered.json) gồm 36 hộp (`32 Car`, `3 Cyclist`, `1 Pedestrian`).
+[ref_A.json](../../d14_2A202603176/ref_A.json) sau rà soát 7 camera và LiDAR gồm **31 hộp** trên 3 frame (`s01f18`: 10, `s03f31`: 5, `s04f28`: 16), gồm `25 Car`, `3 Bus`, `2 Cyclist`, `1 Pedestrian` (toàn bộ dạng `Shape`, `0` Track; trong đó đã bật `occluded=true` cho `12/31` vật bị che một phần gồm `s01f18 #2, #9` và `s04f28 #19, #25, #28`).
 
 Công thức chi phí sửa của lab: `0.3 × xóa + 1.0 × thêm + 0.5 × sửa` (chỉ tính hộp trong 50 m; ghép bằng BEV IoU tối thiểu `0.3`, lệch kích thước/tâm vượt ngưỡng tính `1` sửa).
 
@@ -31,7 +29,7 @@ Chỉ **một** tham số thay đổi so với cấu hình mặc định: `score
 
 Sweep bắt buộc 15 tổ hợp (`score_thr` ∈ `{0.1, 0.2, 0.3, 0.4, 0.5}` × `min_points` ∈ `{0, 5, 10}`) lưu tại [sweep.csv](../../d14_2A202603176/sweep.csv):
 
-- Tại `score_thr=0.5`, cả ba giá trị `min_points` ∈ `{0, 5, 10}` đồng hạng chi phí **8.5** (`xóa=10, thêm=5, sửa=1`). Điều này xảy ra vì các hộp có `score >= 0.5` đều thuộc vật thể đủ gần hoặc đủ đặc điểm, không có hộp nào dưới 10 điểm bị loại thêm bởi `min_points`. `scripts/pp_sweep.py` chọn cấu hình đầu bảng là `score_thr=0.5, min_points=0`.
+- Tại `score_thr=0.5`, cả ba giá trị `min_points` ∈ `{0, 5, 10}` đồng hạng chi phí **8.5** (`xóa=10, thêm=5, sửa=1`). Điều này xảy ra vì các hộp có `score >= 0.5` đều thuộc vật thể đủ gần/nhiều điểm, không có hộp nào dưới 10 điểm bị loại thêm bởi `min_points`. `scripts/pp_sweep.py` chọn cấu hình đầu bảng là `score_thr=0.5, min_points=0`.
 - Ngưỡng tiếp theo `score_thr=0.4` cho chi phí **11.6** (`xóa=22, thêm=4, sửa=2`).
 
 Kết quả **Leave-one-out** ([leave_one_out.txt](../../d14_2A202603176/leave_one_out.txt)): khi giữ từng frame A ra ngoài và chọn cấu hình tốt nhất trên 2 frame còn lại, cả 3 fold đều chọn cùng cấu hình `{'score_thr': '0.5', 'min_points': '0'}` và đạt đúng chi phí tối ưu của grid trên frame giữ lại:
@@ -49,45 +47,41 @@ s04f28: cấu hình chọn {'score_thr': '0.5', 'min_points': '0'} -> 2.0 (tốt
 | `s04f28` | 16 | 3.0 | 2.0 |
 | **Tổng** | **31** | **20.7** | **8.5** |
 
-Sự đồng thuận 3/3 fold cho thấy ngưỡng `score_thr=0.5` ổn định trong grid 15 cấu hình của Tập A; tuy nhiên do Tập A chỉ có 3 frame, không tự suy ra `0.5` chắc chắn là tối ưu toàn cục trên mọi cảnh đường phố khác.
+Sự đồng thuận 3/3 fold cho thấy `score_thr=0.5` ổn định trong grid 15 cấu hình của Tập A; tuy nhiên do Tập A chỉ có 3 frame, không tự suy ra `0.5` chắc chắn là tối ưu toàn cục trên mọi cảnh khác.
 
 ## 3. Trước/sau (bước 8)
 
 ![So sánh cấu hình gốc và cấu hình cuối trên s01f18](../../d14_2A202603176/compare/s01f18.jpg)
 
-Ảnh so sánh trực quan của cả 3 frame A được lưu trong [compare](../../d14_2A202603176/compare/) ([s01f18.jpg](../../d14_2A202603176/compare/s01f18.jpg), [s04f28.jpg](../../d14_2A202603176/compare/s04f28.jpg) và [s03f31.jpg](../../d14_2A202603176/compare/s03f31.jpg)) cùng log [metrics_A_compare.log](../../d14_2A202603176/metrics_A_compare.log).
+Ảnh so sánh của cả 3 frame A lưu trong [compare](../../d14_2A202603176/compare/) ([s01f18.jpg](../../d14_2A202603176/compare/s01f18.jpg), [s04f28.jpg](../../d14_2A202603176/compare/s04f28.jpg), [s03f31.jpg](../../d14_2A202603176/compare/s03f31.jpg)) cùng log [metrics_A_compare.log](../../d14_2A202603176/metrics_A_compare.log).
 
-- Tổng chi phí A giảm từ **20.7** xuống **8.5**, tương đương mức giảm **`(20.7 - 8.5) / 20.7 × 100 = 58.94%`** (`pp_compare.py` làm tròn là **59%**).
-- Phân rã chênh lệch chi phí:
-  - Số hộp **xóa** giảm mạnh từ `54` xuống `10` (giảm 44 hộp giả ở bụi cây, hàng rào, xe hai bánh trống, giúp tiết kiệm `44 × 0.3 = 13.2` điểm).
-  - Số hộp **thêm** tăng nhẹ từ `3` lên `5` (`+2.0` điểm) vì nâng ngưỡng từ `0.1` lên `0.5` làm rơi một số xe xa/điểm thưa ngoài 3 xe `Bus` vốn đã thiếu từ đầu.
-  - Số hộp **sửa** hình học/kích thước giảm từ `3` xuống `1` (`-1.0` điểm).
-  - Tổng hợp: `-13.2 + 2.0 - 1.0 = -12.2` điểm (`20.7 -> 8.5`). Đây là mức giảm theo công thức chi phí quy ước của lab, không quy đổi trực tiếp thành phút thao tác thực tế.
+- Tổng chi phí A giảm từ **20.7** xuống **8.5**, tức giảm **`(20.7 - 8.5) / 20.7 × 100 = 58.94%`** (`pp_compare.py` làm tròn **59%**).
+- Phân rã:
+  - **Xóa** giảm từ `54` xuống `10` (cắt 44 hộp giả ở cây, hàng rào, xe hai bánh trống -> tiết kiệm `44 × 0.3 = 13.2` điểm).
+  - **Thêm** tăng nhẹ từ `3` lên `5` (`+2.0` điểm) vì nâng ngưỡng lên `0.5` làm rơi một số xe xa/thưa điểm ngoài 3 xe `Bus`.
+  - **Sửa** giảm từ `3` xuống `1` (`-1.0` điểm).
+  - Tổng hợp: `-13.2 + 2.0 - 1.0 = -12.2` (`20.7 -> 8.5`). Đây là mức giảm theo công thức chi phí quy ước, không quy trực tiếp thành phút thao tác.
 
-**Nhận xét cá nhân do người học cung cấp sau khi xem tập A** (AI chỉ hỗ trợ chuẩn hóa câu chữ):
+**Nhận xét cá nhân do người học cung cấp sau khi xem tập A** (AI hỗ trợ sửa câu chữ):
 
 > Ở tập A, tôi thấy mô hình bỏ sót một vài vật thể, chẳng hạn như xe bus.
 
-Nhận xét này khớp với kết quả đo lại sau khi làm sạch `ref_A.json`: cả trước và sau tune mô hình vẫn bỏ sót cả 3 xe `Bus` trên Tập A (`s01f18`, `s03f31`, `s04f28`), bởi PointPillars KITTI chỉ được huấn luyện trên 3 lớp `Car / Pedestrian / Cyclist` và suy lớp lớn bằng kích thước sau suy luận nên không tự phục hồi được xe lớn nếu điểm thưa hoặc phân mảnh.
-
-**Đối chiếu dự đoán 5b:** không có nội dung dự đoán trước sweep ở commit `053e299` nên không thể chấm đúng/sai dự đoán 5b. Nhận xét trên được cung cấp sau khi có kết quả thực nghiệm và không được ghi lùi thành bằng chứng bước 5b.
+Nhận xét này khớp với số đo thực tế trên `ref_A.json`: cả trước và sau tune mô hình vẫn bỏ sót cả 3 xe `Bus` trên Tập A do PointPillars KITTI chỉ huấn luyện trên 3 lớp `Car / Pedestrian / Cyclist`. Không dùng nhận xét sau thực nghiệm này để thay thế bằng chứng dự đoán bước 5b.
 
 ## 4. Tập B
 
-Áp dụng cấu hình thắng cuộc `best_config.json` (`score_thr=0.5`, `min_points=0`) chạy pre-label trên 12 frame Tập B tạo [pred_B.json](../../d14_2A202603176/pred_B.json) gồm **175 hộp** (`146 Car`, `26 Cyclist`, `3 Pedestrian`).
+Áp dụng `best_config.json` (`score_thr=0.5`, `min_points=0`) chạy pre-label 12 frame Tập B tạo [pred_B.json](../../d14_2A202603176/pred_B.json) gồm **175 hộp** (`146 Car`, `26 Cyclist`, `3 Pedestrian`).
 
-`ref_B.json` được xuất trực tiếp từ CVAT task `#33` (`D14-2A202603176-B`) sau vòng làm sạch toàn diện trên 12 frame, gồm **161 hộp** (`126 Car`, `19 Cyclist`, `9 Truck`, `4 Pedestrian`, `3 Bus`, 0 Track). Sau khi xuất, nhóm tác vụ QA bằng `scripts/vf_qa.py` trên toàn bộ 192 hộp của Tập A và B ghi nhận **13/15 frame đạt 0 cảnh báo** và chỉ còn **2 hộp** gắn cờ `possible_tight_box` do có cấu trúc kế cận gần sát mép hộp trong phạm vi 1 m (xe `Bus` cạnh nhà chờ BRT ở `s03f31` và xe `Bus` cạnh xe khác/lan can ở `s01f02`; cả hai đã kiểm tra kích thước ngang `2.65 m` hợp lệ nên giữ nguyên). Chi tiết lưu trong [pointcloud_qa.csv](../../d14_2A202603176/pointcloud_qa.csv) và [pointcloud_qa_summary.json](../../d14_2A202603176/pointcloud_qa_summary.json).
+[ref_B.json](../../d14_2A202603176/ref_B.json) được xuất trực tiếp từ CVAT task `#33` (`D14-2A202603176-B`) sau rà soát 12 frame bằng 7 camera + LiDAR, gồm **161 hộp** (`126 Car`, `19 Cyclist`, `9 Truck`, `4 Pedestrian`, `3 Bus`, `0` Track; trong đó đã bật `occluded=true` cho `46/161` xe bị che một phần).
 
-Đối chiếu chi phí sửa trên Tập B (chạy qua `pp_prelabel.py` ở [metrics_B.log](../../d14_2A202603176/metrics_B.log), kèm so sánh đối chứng với cấu hình mặc định `0.1 / 0` trên cùng `ref_B.json`):
+So sánh chi phí sửa Tập B (chạy `scripts/pp_prelabel.py` ghi trong [metrics_B.log](../../d14_2A202603176/metrics_B.log), đối chiếu thêm với cấu hình mặc định `0.1 / 0`):
 
 | Cấu hình trên Tập B | Dự đoán | Khớp | Xóa | Thêm | Sửa | Chi phí |
 |---|---:|---:|---:|---:|---:|---:|
-| Mặc định (`score_thr=0.1`, `min_points=0`, tham khảo) | 371 | 145 | 226 | 16 | 20 | 93.8 |
+| Mặc định (`0.1 / 0`, đối chứng) | 371 | 145 | 226 | 16 | 20 | 93.8 |
 | Đã chọn ([best_config.json](../../d14_2A202603176/best_config.json): `0.5 / 0`) | 175 | 122 | 53 | 39 | 12 | **60.9** |
 
-Mức chi phí sửa trên Tập B giảm từ **93.8** (mặc định) xuống **60.9** (cấu hình đã chọn, giảm **35.07%**), chủ yếu do cắt được 173 hộp thừa ở bụi cây/tường/xe hai bánh rỗng (`xóa` giảm `226 -> 53`). Đồng thời, do `score_thr=0.5` khá chặt và model không có lớp `Truck`/`Bus` gốc, Tập B vẫn cần **39 thao tác thêm** (gồm các xe tải lớn, xe buýt và một số xe/người đi xe đạp bị khuất một phần) và **12 thao tác sửa** kích thước/tâm.
-
-Chi tiết từng frame Tập B dưới cấu hình cuối (`score_thr=0.5`, `min_points=0`):
+Chi phí sửa từng frame Tập B dưới cấu hình cuối (`score_thr=0.5`, `min_points=0`):
 
 | Frame B | Hộp tham chiếu | Hộp dự đoán | Khớp | Xóa | Thêm | Sửa | Chi phí |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -105,28 +99,24 @@ Chi tiết từng frame Tập B dưới cấu hình cuối (`score_thr=0.5`, `mi
 | `s05f45` | 14 | 10 | 9 | 1 | 5 | 1 | 5.8 |
 | **Tổng (12 frame)** | **161** | **175** | **122** | **53** | **39** | **12** | **60.9** |
 
-Trong tổng chi phí `60.9`, phần **thêm hộp** chiếm tỷ trọng cao nhất (`39 × 1.0 = 39.0` điểm), tiếp theo là **xóa hộp** (`53 × 0.3 = 15.9` điểm) và **sửa kích thước** (`12 × 0.5 = 6.0` điểm). Điều này cho thấy sau khi nâng ngưỡng lọc lên `0.5` để bỏ dương tính giả ở cảnh đô thị dày bụi cây/lan can, gánh nặng sửa tay chuyển từ xóa nhiều hộp thừa sang bổ sung các đối tượng bị sót (`Truck`, `Bus`, xe bị che khuất một phần).
+Trong tổng chi phí `60.9`, phần **thêm hộp** chiếm tỷ trọng lớn nhất (`39 × 1.0 = 39.0` điểm), tiếp theo là **xóa hộp** (`53 × 0.3 = 15.9`) và **sửa kích thước** (`12 × 0.5 = 6.0`), phản ánh thực tế `score_thr=0.5` cắt tốt hộp giả (`xóa` giảm `226 -> 53`) nhưng bỏ sót một số xe tải/xe buýt/xe che khuất (`add=39`).
 
 ## 5. Giới hạn
 
-1. **Tập A chỉ có 3 frame:** ba cấu hình `score_thr=0.5` với `min_points` ∈ `{0, 5, 10}` đồng hạng `8.5`, và dù 3/3 fold leave-one-out đều chọn `0.5 / 0`, ngưỡng `0.5` trên Tập B làm tăng số hộp cần thêm (`16 -> 39`) so với `0.1` dù giảm mạnh chi phí tổng (`93.8 -> 60.9`). Trong điều kiện triển khai thực tế trên cảnh nhiều vật che khuất, một ngưỡng trung bình hơn (như `0.3–0.4`) có thể cân bằng recall tốt hơn khi công thêm cao gấp ~3.3 lần công xóa (`1.0` vs `0.3`).
-2. **Hạn chế domain và lớp của checkpoint gốc:** PointPillars học trên KITTI với 3 lớp `Car`, `Pedestrian`, `Cyclist`; hoàn toàn không được huấn luyện nhãn `Truck` và `Bus`. Vì vậy trên 15 frame VinFast (`3 Bus` ở A; `9 Truck`, `3 Bus` ở B), phần lớn xe tải/xe buýt bị dự đoán thành `Car` nhỏ (dẫn đến lỗi `edit` kích thước) hoặc bị bỏ sót (`add`).
-3. **Chỉ số chi phí là ước lượng hình học:** `correction_cost` dựa trên ngưỡng BEV IoU `0.3` và chênh lệch kích thước/tâm, không phản ánh trọn vẹn thời gian xoay chỉnh từng góc camera trên CVAT hoặc chi phí phân biệt xe máy có người lái vs xe đậu trống.
-4. **Cần rà soát xác nhận cuối của người học:** AI đã đối chiếu cả 7 góc camera và 3 mặt cắt điểm LiDAR để rà 283 hộp thô thành **192 hộp đề xuất đã tinh chỉnh và xuất lại từ CVAT `#32/#33`** (trong đó đã rà và cập nhật cờ `occluded=true` cho các xe bị che một phần: `12/31` hộp Tập A gồm cả `s01f18 #2, #9` và `s04f28 #19, #25, #28`, cùng `46/161` hộp Tập B). Tuy nhiên, `review_checklist.csv` vẫn giữ trạng thái `AI_QA_REFINED_CVAT_EXPORTED` vì người học vẫn cần trực tiếp mở CVAT xác nhận cuối cùng theo `GUIDELINE.md` trước khi khóa bài.
-5. **Thứ tự và bằng chứng bước 5b:** thiếu nội dung dự đoán trước sweep trong lịch sử Git tại commit `053e299`; phần giải thích trung thực nằm ở mục 1 và [COACH_NOTE_DRAFT.md](../../d14_2A202603176/COACH_NOTE_DRAFT.md).
+1. **Tập A chỉ có 3 frame:** `score_thr=0.5` đồng hạng ở `min_points` ∈ `{0, 5, 10}` và đồng thuận `3/3` LOO trên A, nhưng trên Tập B ngưỡng `0.5` làm tăng công thêm (`16 -> 39`) dù giảm chi phí tổng (`93.8 -> 60.9`). Trong thực tế có thể cân nhắc ngưỡng `0.3–0.4` khi công thêm lớn gấp `3.3×` công xóa.
+2. **Hạn chế domain/lớp của checkpoint KITTI:** không được train lớp `Truck` và `Bus`, nên xe buýt (`3` ở A, `3` ở B) và xe tải (`9` ở B) thường bị gán nhầm thành `Car` nhỏ (`edit`) hoặc bỏ sót (`add`).
+3. **Chỉ số `correction_cost` là ước lượng hình học:** không đo trực tiếp thời gian xoay chỉnh trên giao diện CVAT.
+4. **Rà soát xác nhận cuối trên CVAT:** các đề xuất chỉnh sửa/loại hộp giả/`occluded` trên 15 frame (`#32`, `#33`) có AI hỗ trợ đối chiếu 7 camera và LiDAR; người học vẫn cần mở xem xác nhận cuối cùng trên CVAT trước khi khóa bài.
+5. **Thiếu bằng chứng lịch sử 5b:** giải thích trung thực tại mục 1 và [COACH_NOTE_DRAFT.md](../../d14_2A202603176/COACH_NOTE_DRAFT.md).
 
 ---
 
-### Điểm cộng (Bonus)
+### Điểm cộng (Bonus Hướng 2): PointPillars serverless trong CVAT (`pp-2a202603176`)
 
-#### Hướng 2 (Chính): Đưa PointPillars vào CVAT qua Nuclio serverless (`pp-2a202603176`)
+Đã hoàn chỉnh, build và triển khai thành công Nuclio function `pp-2a202603176` kết nối vào **CVAT Serverless (`Models`)** tại `http://localhost:8080` trên mạng `cvat_cvat` ([chi tiết kỹ thuật](../../d14_2A202603176/bonus_nuclio_pp/README.md), không chứa `third_party/` hay `.pth`).
 
-Đã hoàn chỉnh, build và triển khai thành công hàm Nuclio `pp-2a202603176` kết nối trực tiếp vào **CVAT Serverless (Models tab)** tại `http://localhost:8080` trên mạng `cvat_cvat`, đúng theo [hướng dẫn 3D serverless](../../bonus/huong-dan-model-3d.html). Mã nguồn và tài liệu lưu tại [bonus_nuclio_pp](../../d14_2A202603176/bonus_nuclio_pp/README.md) (tách biệt hoàn toàn khỏi `third_party/` và file `.pth`).
-
-- **Điểm kỹ thuật chính ([main.py](../../d14_2A202603176/bonus_nuclio_pp/main.py), [function.yaml](../../d14_2A202603176/bonus_nuclio_pp/function.yaml)):**
-  - `parse_pcd(pcd_bytes)` hỗ trợ đầy đủ binary/ascii `.pcd` do CVAT gửi qua `body["image"]` base64 và đảo ngược chuẩn xác hàm nén xám logarit `vf_common.intensity_gray` (`t = clip((g - 40)/215, 0, 1); intensity = expm1(t * log1p(50))`) để giữ đặc trưng phản xạ LiDAR khớp với pipeline `.bin`.
-  - Xử lý tương thích CVAT v2.74.1 `lambda_manager`: bổ sung `spec.description` trong `function.yaml` và cấu hình `platform.attributes.network: cvat_cvat` để Nuclio container giao tiếp trực tiếp với `cvat_server`.
-- **Kiểm chứng live qua CVAT API (`/api/lambda/requests`):** chạy thử nghiệm trên task riêng `#35` (`D14-2A202603176-BONUS-TEST`, gồm 3 frame Tập A để không ghi đè nhãn đã làm sạch của `#32/#33`) với `threshold=0.3`, kết quả lưu tại [lambda_match_report.json](../../d14_2A202603176/bonus_nuclio_pp/lambda_match_report.json):
+- [main.py](../../d14_2A202603176/bonus_nuclio_pp/main.py) giải mã binary/ascii `.pcd` (`rgb`) và đảo ngược nén log `vf_common.intensity_gray`; [function.yaml](../../d14_2A202603176/bonus_nuclio_pp/function.yaml) cấu hình `spec.description` tương thích CVAT v2.74.1 và mạng `cvat_cvat`.
+- Chạy qua API `/api/lambda/requests` (`threshold=0.3`) trên task thử nghiệm `#35` (`D14-2A202603176-BONUS-TEST`, không ghi đè `#32/#33`), kết quả tại [lambda_match_report.json](../../d14_2A202603176/bonus_nuclio_pp/lambda_match_report.json):
 
 | Frame thử nghiệm | CVAT Lambda (`threshold=0.3`) | Offline `pred_A` (`score >= 0.3`) | Khớp tâm `<= 0.5 m` cùng lớp |
 |---|---:|---:|---:|
@@ -135,17 +125,10 @@ Trong tổng chi phí `60.9`, phần **thêm hộp** chiếm tỷ trọng cao nh
 | `s04f28` | 18 | 18 | 18 / 18 |
 | **Tổng (3 frame)** | **67** | **63** | **63 / 63 (100%)** |
 
-Độ lệch nhỏ +4 hộp sát ngưỡng `0.3` (67 vs 63) đến từ sai số lượng tử hóa kênh `uint8` grayscale trong `.pcd` (`0..255`) so với `float32` intensity nguyên thủy ở `.bin`.
-
-> **Trạng thái hoàn thiện Bonus Hướng 2:** Code handler/yaml, deploy Nuclio `ready` trong CVAT và kết quả so khớp `63/63` hộp đã hoàn tất; **chưa có video quay màn hình ngắn hoặc link video** đính kèm theo tiêu chí `+3` trong `bonus/README.md` (cần người học quay nhanh/bổ sung link trước khi tính đủ tiêu chí trình diễn).
-
-#### Hướng 1 (Phụ): Công cụ phân tích telemetry (`cvat-telemetry-addon.user.js`)
-
-Đã chuẩn bị sẵn bộ công cụ đo thao tác và tách log theo frame ([bonus_telemetry/analyze_bonus.py](../../d14_2A202603176/bonus_telemetry/analyze_bonus.py)) tương thích với `bonus/telemetry_metrics.py` và kiểm tra tự động qua `tests/test_telemetry_metrics.py` (PASS). Do phần rà sửa chính trên `#32/#33` thực hiện theo quy trình chuẩn hóa nhãn có đối chiếu QA thay vì một phiên bấm chuột độc lập trọn 12 frame trên trình duyệt, bài nộp **không** tạo hoặc đính kèm log telemetry giả (tuân thủ `RULES.md`).
+Độ lệch +4 hộp sát ngưỡng `0.3` đến từ lượng tử hóa `uint8` grayscale trong `.pcd`. *Ghi chú: đã xong code, deploy live và số đo `63/63`; chưa có video quay màn hình ngắn kèm link theo tiêu chí `+3` trong `bonus/README.md`.*
 
 ---
 
-### Nguồn, kiểm chứng và hỗ trợ công cụ
+### Nguồn & khai báo hỗ trợ AI
 
-- **Khai báo hỗ trợ AI:** AI hỗ trợ thiết lập môi trường chạy CPU, rà soát khung hình 7 camera + 3 mặt cắt điểm LiDAR để phát hiện và đề xuất chỉnh sửa nhãn trên CVAT `#32/#33`, viết script triển khai/đối chiếu Nuclio Bonus (`pp-2a202603176`), chạy lại đầy đủ pipeline bắt buộc của lab (`vf_cvat.py reference`, `pp_sweep.py`, `pp_prelabel.py`, `pp_compare.py`, `reproduce_reference_qa.py`) và tổng hợp báo cáo/kiểm tra tự động. Không sửa code core `vf_pp`/`scripts`, không dùng nhãn coach `Labels-VF`, không viết lại lịch sử Git `053e299` và không bịa log 5b hoặc telemetry.
-- Chi tiết đối chiếu toàn bộ yêu cầu, mã kiểm chứng và danh sách file nằm trong [FINAL_REVIEW.md](../../d14_2A202603176/FINAL_REVIEW.md), [VISUAL_REVIEW.md](../../d14_2A202603176/VISUAL_REVIEW.md), [validation_summary.json](../../d14_2A202603176/validation_summary.json) và [full_review_20261127.json](../../d14_2A202603176/full_review_20261127.json).
+AI hỗ trợ thiết lập môi trường CPU, đối chiếu 7 camera + mặt cắt LiDAR để đề xuất tinh chỉnh nhãn & cờ `occluded` trên CVAT `#32/#33`, viết module triển khai Bonus Nuclio `pp-2a202603176` và tổng hợp số đo báo cáo. Không sửa code core `vf_pp`/`scripts`, không dùng nhãn coach `Labels-VF`, không sửa lịch sử Git `053e299` và không tạo dữ liệu giả.

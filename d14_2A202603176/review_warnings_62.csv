@@ -1,3 +1,0 @@
-﻿part,task_id,frame,cvat_frame,cvat_object_id,reference_idx,label,x,y,z,length,width,height,yaw,dist_m,points_in,ground_gap_m,flags,review_status,decision,cvat_job_url
-A,32,s03f31,1,11,1,Bus,-6.8732,20.8412,0.0822,11.6,2.65,3.4327,4.6769,21.9,557,0.06,"940 điểm sát ngay ngoài mép (quá chật, hay vật bên cạnh?)",AI_QA_REFINED_CVAT_EXPORTED,KEEP_VALID_PROXIMITY,http://localhost:8080/tasks/32/jobs/32
-B,33,s01f02,0,2,2,Bus,-31.204,10.5599,0.0975,10.8188,2.65,3.3271,3.0892,32.9,200,0.06,"92 điểm sát ngay ngoài mép (quá chật, hay vật bên cạnh?)",AI_QA_REFINED_CVAT_EXPORTED,KEEP_VALID_PROXIMITY,http://localhost:8080/tasks/33/jobs/33

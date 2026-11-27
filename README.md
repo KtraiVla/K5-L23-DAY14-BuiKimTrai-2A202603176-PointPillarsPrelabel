@@ -1,7 +1,5 @@
 # Day 14 — Pre-label 3D bằng PointPillars pre-trained (VF LiDAR)
 
-> **Bài làm Bui Kim Trai — 2A202603176:** [chỉ mục file và trạng thái nộp](SUBMISSION_INDEX.md) · [báo cáo cá nhân](report/individual/2A202603176_BuiKimTrai.md) · [rà soát chi tiết](d14_2A202603176/FINAL_REVIEW.md). Toàn bộ pipeline kỹ thuật (A, Sweep, Compare, B, QA 192 hộp) và Bonus Hướng 2 Nuclio live đã chạy và kiểm tra; thiếu bằng chứng 5b ở commit lịch sử `053e299` đã khai báo ở `COACH_NOTE_DRAFT.md`, còn người học nộp link commit SHA lên LMS.
-
 **Bài cá nhân.** Cuối buổi lý thuyết sáng, bạn có 10 phút cài đặt và 35 phút chạy thử. Buổi chiều, bạn làm tập A và B. Nộp link commit GitHub (có SHA) lên LMS trước **12:00 trưa hôm sau** (GMT+7).
 
 Tài liệu: [SUBMISSION.md](SUBMISSION.md) (nộp gì, nộp ở đâu) · [RUBRIC.md](RUBRIC.md) (chấm điểm) · [CHECKPOINTS.md](CHECKPOINTS.md) (tự kiểm từng bước) · [RULES.md](RULES.md) (quy định) · [report/individual/MSSV_HoTen.md](report/individual/MSSV_HoTen.md) (template báo cáo)
